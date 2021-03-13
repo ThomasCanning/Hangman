@@ -1,3 +1,5 @@
+package com.HangmanGame;
+
 public class Intro {  //THIS CLASS IS TEMPORARY AND WILL BE TURNED INTO A GUI AT A LATER POINT
         public static void Welcome(){
             System.out.println("Welcome to Hangman");
