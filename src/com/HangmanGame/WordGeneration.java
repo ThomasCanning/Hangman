@@ -16,7 +16,7 @@ public class WordGeneration {  //This class has a method that can be called whic
     }
 
     public static String generate() throws FileNotFoundException {
-        File file = new File("src/word_library.txt");  //reading file with words in
+        File file = new File("src/com/HangmanGame/word_library.txt");  //reading file with words in
         Scanner scan = new Scanner(file);
         List<String> words = new ArrayList<String>();
 
@@ -30,7 +30,24 @@ public class WordGeneration {  //This class has a method that can be called whic
     }
 
     public static char[] splitWord(String randomWord){
-        char[] splitWord = randomWord.toCharArray();
+        char[] splitWord = convertWord(randomWord).toCharArray();
         return splitWord;
+    }
+
+    private static String convertWord(String randomWord) {
+        String upperWord = "";
+            upperWord = randomWord.substring(0 ,randomWord.length()).toUpperCase();
+        return upperWord;
+    }
+
+    public static boolean check(char[] splitWord, char userGuess) {
+        boolean test = false;
+        for (int i : splitWord) {
+            if (i == userGuess) {
+                test = true;
+                break;
+            }
+        }
+        return test;
     }
 }
