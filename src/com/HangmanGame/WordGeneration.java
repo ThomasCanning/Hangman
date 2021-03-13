@@ -50,4 +50,14 @@ public class WordGeneration {  //This class has a method that can be called whic
         }
         return test;
     }
+/*  //WORK IN PROGRESS
+    public static char[] correctGuess(char userGuess, char[] playerGuesses) {
+        char[] newPlayerGuesses = new char[playerGuesses.length];
+        for (int i = 0; i<playerGuesses.length; i++) {
+            if (userGuess == playerGuesses[i]) {
+                newPlayerGuesses[i] = userGuess;
+            }
+        }
+        return newPlayerGuesses;
+    }*/
 }
