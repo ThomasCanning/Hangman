@@ -9,12 +9,10 @@ FINAL PROJECT WILL MAKE USE OF A GUI. THIS IS MOSTLY PRACTISE/WORKING OUT HOW WE
 
 S0 FAR IMPLEMENTED A SIMPLE VERSION OF THE GAME THAT WORKS IN THE RUN WINDOW, GENERATING A RANDOM WORD FROM 1 PLACEHOLDER TEXT FILE OF WORDS,
 AND ALLOWING THE USER TO GUESS A LETTER EACH GO IN THE RUN WINDOW. THE USER HAS 8 INCORRECT LETTER GUESSES TO REPRESENT THE WORD. SUCCESSFULLY GUESSING THE
-WORD WILL PRINT TRUE, NOT GUESSING THE WORD AFTER 8 INCORRECT GUESSES WILL PRINT FALSE. OUT PRINTS AFTER THE GUESSING FOR LOOP FINISHES. THIS BASIC VERSION
+WORD WILL PRINT TRUE, NOT GUESSING THE WORD AFTER 7 INCORRECT GUESSES WILL PRINT FALSE. OUT PRINTS AFTER THE GUESSING FOR LOOP FINISHES. THIS BASIC VERSION
 OF THE GAME WORKS FOR 1 ROUND. THE RANDOM WORD IS PRINTED OUT AT THE START FOR TESTING PURPOSES. THE TEXT FILE word_library IS A PLACEHOLDER AND CURRENTLY
 CONSISTS OF A LIST OF COUNTRIES AS AN EXAMPLE
 
-SO FAR DOESN'T REALLY WORK IF WORD HAS SPACES OR ' IN IT, NEED TO IMPLEMENTS SOMETHING THAT TURNS A SPACE INTO A SPACE OR A ' INTO A ' INSTEAD OF AN UNDERSCORE
-BECAUSE WE DON'T WANT THE USER TO NOT KNOW WHERE THESE ARE.
 */
 
 class HangmanGame {
@@ -23,21 +21,23 @@ class HangmanGame {
 
 //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
-        System.out.println(randomWord + " TEMPORARILY PRINTING OUT THE RANDOM WORD");
+        //System.out.println(randomWord);
         char[] splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
 
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
         char[] playerGuesses = new char[wordLength];  //For loop to create an array of _ for each character in splitWord to be used for user guesses
         for (int i = 0; i < wordLength; i++) {
-            playerGuesses[i] = '_';
+            if (splitWord[i] == ' ') playerGuesses[i] = ' ';
+            else if (splitWord[i] == '\'') playerGuesses[i] = '\'';
+            else playerGuesses[i] = '_';
             System.out.print(playerGuesses[i]);
         }
 
 //--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
         boolean correctlyGuessed = false;
 
-        for (int incorrectGuesses = 0; (incorrectGuesses < 8) && (!correctlyGuessed); ) {//Loop until Hangman is hung or word is correctly guessed
+        for (int incorrectGuesses = 0; (incorrectGuesses < 7) && (!correctlyGuessed); ) {//Loop until Hangman is hung or word is correctly guessed
 
             Scanner input = new Scanner(System.in);  //Taking user input for a character
             char userGuess = (input.next().charAt(0));  //Saving user input as a variable
