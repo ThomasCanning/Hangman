@@ -1,13 +1,17 @@
 package com.HangmanGame;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*THIS IS THE CURRENT MAIN GAME CLASS WHICH RUNS WHEN THE GAME IS RAN, MOST OF IT IS TEMPORARY AND IS PRACTISE AS THE
 FINAL PROJECT WILL MAKE USE OF A GUI. THIS IS MOSTLY PRACTISE/WORKING OUT HOW WE CAN DO THINGS.
 
-CURRENTLY WORKING ON THE SYSTEM FOR CORRECT GUESSES AND LETTING USER KNOW WHICH LETTERS ARE YET TO BE CORRECTLY GUESSES
- */
+S0 FAR IMPLEMENTED A SIMPLE VERSION OF THE GAME THAT WORKS IN THE RUN WINDOW, GENERATING A RANDOM WORD FROM 1 PLACEHOLDER TEXT FILE OF WORDS,
+AND ALLOWING THE USER TO GUESS A LETTER EACH GO IN THE RUN WINDOW. THE USER HAS 8 INCORRECT LETTER GUESSES TO REPRESENT THE WORD. SUCCESSFULLY GUESSING THE
+WORD WILL PRINT TRUE, NOT GUESSING THE WORD AFTER 8 INCORRECT GUESSES WILL PRINT FALSE. OUT PRINTS AFTER THE GUESSING FOR LOOP FINISHES. THIS BASIC VERSION
+OF THE GAME WORKS FOR 1 ROUND.
+*/
 
 
 
@@ -23,7 +27,7 @@ class HangmanGame {
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
         char[] playerGuesses = new char[wordLength];  //For loop to create an array of _ for each character in splitWord to be used for user guesses
-        for (int i=0; i< wordLength; i++) {
+        for (int i = 0; i < wordLength; i++) {
             playerGuesses[i] = '_';
             System.out.print(playerGuesses[i]);
         }
@@ -31,28 +35,28 @@ class HangmanGame {
 //--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
         boolean correctlyGuessed = false;
 
-        for(int incorrectGuesses = 0 ; (incorrectGuesses < 8) || (correctlyGuessed == false);) {//Loop until correctly guessed or Hangman is hung
+        for (int incorrectGuesses = 0; (incorrectGuesses < 8) && (correctlyGuessed == false); ) {//Loop until correctly guessed or Hangman is hung
 
             Scanner input = new Scanner(System.in);  //Taking user input for a character
             char userGuess = (input.next().charAt(0));  //Saving user input as a variable
             userGuess = Character.toUpperCase(userGuess);  //Converting user input to upper case
 
             if (WordGeneration.check(splitWord, userGuess) == true) {//If guessed letter is in word then sets the corresponding "_"'s to the correct letter
-                System.out.println("TRUE");
+                System.out.println("CORRECT GUESS");
                 playerGuesses = WordGeneration.correctGuess(userGuess, splitWord, playerGuesses);
                 for (int i = 0; i < playerGuesses.length; i++) {
                     System.out.print(playerGuesses[i]);  //Prints out the word with correctly guessed "_" filled in
                 }
-//WORK IN PROGRESS
-                //correctlyGuessed = true;
-                //System.out.println(correctlyGuessed);
+                correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
             }
             else {
-                incorrectGuesses++;  //Increments incorrect guesses counter by 1, will be used to draw Hangman in GUI
-                System.out.println(correctlyGuessed);
+                incorrectGuesses++;
+                System.out.println("You have made " + incorrectGuesses + " incorrect guesses");  //Increments incorrect guesses counter by 1, will be used to draw Hangman in GUI
+                System.out.println("INCORRECT GUESS");//PLACEHOLDER for GUI hangman being drawn
             }
-            }
-
-        System.out.println("OUT");
+        }
+            System.out.println();
+            System.out.println(correctlyGuessed);  //TEST to see if word has been guessed
+            System.out.println("OUT");  //TEST to see if for loop has ended
         }
     }
