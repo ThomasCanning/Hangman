@@ -34,10 +34,9 @@ public class WordGeneration {  //This class has a method that can be called whic
         return splitWord;
     }
 
-
     private static String convertWord(String randomWord) {
         String upperWord = "";
-            upperWord = randomWord.substring(0 ,randomWord.length()).toUpperCase();
+            upperWord = randomWord.toUpperCase();
         return upperWord;
     }
 
