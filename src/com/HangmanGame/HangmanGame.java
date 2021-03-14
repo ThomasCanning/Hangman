@@ -19,7 +19,7 @@ BECAUSE WE DON'T WANT THE USER TO NOT KNOW WHERE THESE ARE.
 
 class HangmanGame {
     public static void main(String[] args) throws FileNotFoundException {
-        //Intro.Welcome();   //This runs a method that prints out temporary intro text
+        Intro.Welcome();   //This runs a method that prints out temporary intro text
 
 //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
