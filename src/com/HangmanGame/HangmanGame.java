@@ -31,27 +31,28 @@ class HangmanGame {
 //--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
         boolean correctlyGuessed = false;
 
-        for(int incorrectGuesses = 0 ; (incorrectGuesses < 8) || (correctlyGuessed == true);) {//Loop until correctly guessed or Hangman is hung
+        for(int incorrectGuesses = 0 ; (incorrectGuesses < 8) || (correctlyGuessed == false);) {//Loop until correctly guessed or Hangman is hung
 
             Scanner input = new Scanner(System.in);  //Taking user input for a character
             char userGuess = (input.next().charAt(0));  //Saving user input as a variable
             userGuess = Character.toUpperCase(userGuess);  //Converting user input to upper case
 
-            if (WordGeneration.check(splitWord, userGuess) == true) {//If guessed letter is in word then does something
+            if (WordGeneration.check(splitWord, userGuess) == true) {//If guessed letter is in word then sets the corresponding "_"'s to the correct letter
                 System.out.println("TRUE");
-                char[] newPlayerGuesses = WordGeneration.correctGuess(userGuess, playerGuesses);
-                System.out.println(newPlayerGuesses[0]);
-                //for (int i = 0; i < newPlayerGuesses.length; i++) {
-                    //System.out.println(newPlayerGuesses[i]);
-                //}
-
+                playerGuesses = WordGeneration.correctGuess(userGuess, splitWord, playerGuesses);
+                for (int i = 0; i < playerGuesses.length; i++) {
+                    System.out.print(playerGuesses[i]);  //Prints out the word with correctly guessed "_" filled in
+                }
+//WORK IN PROGRESS
+                //correctlyGuessed = true;
+                //System.out.println(correctlyGuessed);
             }
-            else {//If guessed letter is not in word then does something else
-                incorrectGuesses++;
-                System.out.println(incorrectGuesses);
+            else {
+                incorrectGuesses++;  //Increments incorrect guesses counter by 1, will be used to draw Hangman in GUI
                 System.out.println(correctlyGuessed);
             }
             }
+
         System.out.println("OUT");
         }
     }
