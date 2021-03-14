@@ -8,5 +8,6 @@ public class Intro {  //THIS CLASS IS TEMPORARY AND WILL BE TURNED INTO A GUI AT
             System.out.println("be told all positions of that letter in the word. For each incorrect guess, a new piece of the Gallows and the ");
             System.out.println("Hangman will be constructed. After 8 incorrect guesses the man will be hung will and you will lose.");
             System.out.println("Good Luck!");
+            System.out.println();
         }
 }

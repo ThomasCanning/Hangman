@@ -23,7 +23,7 @@ class HangmanGame {
 
 //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
-        System.out.println(randomWord);
+        System.out.println(randomWord + " TEMPORARILY PRINTING OUT THE RANDOM WORD");
         char[] splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
 
         int wordLength = splitWord.length;  //Stores length of word as a variable
