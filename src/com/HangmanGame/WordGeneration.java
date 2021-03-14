@@ -11,31 +11,26 @@ import java.util.Scanner;
 public class WordGeneration {  //This class has a method that can be called which generates a random word from the .txt file "word_library.txt"
 
     private static int random(int listSize){  //Method for generating random number between 0 and list length
-        int randomNumber = (int) (Math.random() * (listSize+1));
-        return randomNumber;
+        return (int) (Math.random() * (listSize+1));
     }
 
     public static String generate() throws FileNotFoundException {
         File file = new File("src/com/HangmanGame/word_library.txt");  //Reading file with words in
         Scanner scan = new Scanner(file);
-        List<String> words = new ArrayList<String>();
+        List<String> words = new ArrayList<>();
 
         for(int i = 0; scan.hasNextLine(); i++) {  //For loop to add all words in file to a list
             words.add(i, scan.nextLine());
         }
-
-        String randomWord = words.get(WordGeneration.random(words.size())); //Using random method to get a random word from the list of words
-
-        return randomWord;
+        return words.get(WordGeneration.random(words.size()));
     }
 
     public static char[] splitWord(String randomWord){  //Turns random word string into an array of characters that is easier to work with
-        char[] splitWord = convertWord(randomWord).toCharArray();
-        return splitWord;
+        return convertWord(randomWord).toCharArray();
     }
 
     private static String convertWord(String randomWord) {
-        String upperWord = "";
+        String upperWord;
             upperWord = randomWord.toUpperCase();
         return upperWord;
     }
@@ -52,12 +47,11 @@ public class WordGeneration {  //This class has a method that can be called whic
     }
 
     public static char[] correctGuess(char userGuess, char[] splitWord, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
-        char[] newPlayerGuesses = playerGuesses;  //Creates an array for new user guesses which is same as previous user guesses
         for (int i = 0; i<splitWord.length; i++) {
             if (userGuess == splitWord[i]) { //If userGuess is the same as a letter in the word then the _ is changed to that letter
-                newPlayerGuesses[i] = userGuess;  //Sets the _ to that letter
+                playerGuesses[i] = userGuess;  //Sets the _ to that letter
             }
         }
-        return newPlayerGuesses;  //Returns this new array newPlayerGuesses back to original playerGuesses array
+        return playerGuesses;  //Returns this new array newPlayerGuesses back to original playerGuesses array
     }
 }

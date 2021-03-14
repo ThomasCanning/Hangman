@@ -16,10 +16,9 @@ CONSISTS OF A LIST OF COUNTRIES AS AN EXAMPLE
 */
 
 class HangmanGame {
-    public static void main(String[] args) throws FileNotFoundException {
-        Intro.Welcome();   //This runs a method that prints out temporary intro text
 
-//------------------------------------------Setting up and generating random word-------------------------------------------------
+    private static void game(int gamesWon) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
+        //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         //System.out.println(randomWord);
         char[] splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
@@ -27,17 +26,24 @@ class HangmanGame {
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
         char[] playerGuesses = new char[wordLength];  //For loop to create an array of _ for each character in splitWord to be used for user guesses
-        for (int i = 0; i < wordLength; i++) {
+        for(
+        int i = 0;
+        i<wordLength;i++)
+
+        {
             if (splitWord[i] == ' ') playerGuesses[i] = ' ';
             else if (splitWord[i] == '\'') playerGuesses[i] = '\'';
             else playerGuesses[i] = '_';
             System.out.print(playerGuesses[i]);
         }
 
-//--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
+        //--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
         boolean correctlyGuessed = false;
 
-        for (int incorrectGuesses = 0; (incorrectGuesses < 7) && (!correctlyGuessed); ) {//Loop until Hangman is hung or word is correctly guessed
+        for(
+        int incorrectGuesses = 0; (incorrectGuesses< 7)&&(!correctlyGuessed); )
+
+        {//Loop until Hangman is hung or word is correctly guessed
 
             Scanner input = new Scanner(System.in);  //Taking user input for a character
             char userGuess = (input.next().charAt(0));  //Saving user input as a variable
@@ -50,15 +56,45 @@ class HangmanGame {
                     System.out.print(playerGuess);  //Prints out the word with correctly guessed "_" filled in
                 }
                 correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
-            }
-            else {
+                if (correctlyGuessed) gamesWon++;
+            } else {
                 incorrectGuesses++;
                 System.out.println("You have made " + incorrectGuesses + " incorrect guesses");  //Increments incorrect guesses counter by 1, will be used to draw Hangman in GUI
-                System.out.println("INCORRECT GUESS");//PLACEHOLDER for GUI hangman being drawn
+                System.out.println("INCORRECT GUESS");
+                for (char playerGuess : playerGuesses) { //For each loop to cycle through playerGuesses array
+                    System.out.print(playerGuess); }
+                System.out.println();
+                Gallows.draw(incorrectGuesses);//PLACEHOLDER for GUI hangman being drawn
+
             }
+
         }
+
+//------------------------------------------What happens after a round------------------------------------------
             System.out.println();
-            System.out.println(correctlyGuessed);  //TEST to see if word has been guessed
-            System.out.println("OUT");  //TEST to see if for loop has ended
-        }
+            if (correctlyGuessed) System.out.println("Congratulations you guessed the word correctly");
+            else System.out.println("Better luck next time, the word was " + randomWord);
+            Scanner input = new Scanner(System.in);
+            System.out.println("Would you like to play again (yes/no)");
+            String playAgain = input.nextLine();
+            if (playAgain.equals("yes") || playAgain.equals("YES") || playAgain.equals("Yes")) {
+                System.out.println();
+                game(gamesWon);//Repeats game
+            }
+            else {  //End of game script
+                if (gamesWon == 0) System.out.println("Unfortunately, you didn't win any games in this session");
+                else if (gamesWon == 1 ) System.out.println("Well done, you won 1 game this session");
+                else if (gamesWon >= 1 && gamesWon <= 3) System.out.println("Great job, you won " + gamesWon + " games this session!");
+                else System.out.println("Incredible! You won " + gamesWon + " games this session!");
+                System.out.println("Thanks for playing!");
+                }
+            }
+
+
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Intro.Welcome();   //This runs a method that prints out temporary intro text
+        int gamesWon = 0;
+        game(gamesWon);  //This runs an initial round of the game
     }
+}
