@@ -15,32 +15,38 @@ class HangmanGame {
     public static void main(String[] args) throws FileNotFoundException {
         //Intro.Welcome();   //This runs a method that prints out temporary intro text
 
-        String randomWord = WordGeneration.generate();  //Generates a random word from text file
+//------------------------------------------Setting up and generating random word-------------------------------------------------
+        String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         System.out.println(randomWord);
         char[] splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
-        char[] playerGuesses = new char[splitWord.length];
 
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
+        char[] playerGuesses = new char[wordLength];  //For loop to create an array of _ for each character in splitWord to be used for user guesses
+        for (int i=0; i< wordLength; i++) {
+            playerGuesses[i] = '_';
+            System.out.print(playerGuesses[i]);
+        }
+
+//--------------------------------------System that lets user guess and deals with incorrect/correct guesses------------------------------------
         boolean correctlyGuessed = false;
 
-        for(int incorrectGuesses = 0 ; (incorrectGuesses < 8) || (correctlyGuessed == true);) {
+        for(int incorrectGuesses = 0 ; (incorrectGuesses < 8) || (correctlyGuessed == true);) {//Loop until correctly guessed or Hangman is hung
 
             Scanner input = new Scanner(System.in);  //Taking user input for a character
-            char userGuess = (input.next().charAt(0));
+            char userGuess = (input.next().charAt(0));  //Saving user input as a variable
             userGuess = Character.toUpperCase(userGuess);  //Converting user input to upper case
 
-            if (WordGeneration.check(splitWord, userGuess) == true) {
+            if (WordGeneration.check(splitWord, userGuess) == true) {//If guessed letter is in word then does something
                 System.out.println("TRUE");
-
-                //DO SOMETHING TO KEEP TRACK OF CORRECTLY GUESSED LETTERS //WORK IN PROGRESS
-                /* char[] newPlayerGuesses = WordGeneration.correctGuess(userGuess, playerGuesses);
-                for (int i = 0; i < newPlayerGuesses.length; i++) {
-                    System.out.println(newPlayerGuesses[i]);
-                } */
+                char[] newPlayerGuesses = WordGeneration.correctGuess(userGuess, playerGuesses);
+                System.out.println(newPlayerGuesses[0]);
+                //for (int i = 0; i < newPlayerGuesses.length; i++) {
+                    //System.out.println(newPlayerGuesses[i]);
+                //}
 
             }
-            else {
+            else {//If guessed letter is not in word then does something else
                 incorrectGuesses++;
                 System.out.println(incorrectGuesses);
                 System.out.println(correctlyGuessed);

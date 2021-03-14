@@ -1,4 +1,4 @@
-fghanistan
+Afghanistan
 Albania
 Algeria
 Andorra
@@ -38,7 +38,6 @@ Colombia
 Comoros
 Democratic Republic of the Congo
 Costa Rica
-Côte d’Ivoire
 Croatia
 Cuba
 Cyprus
@@ -111,7 +110,7 @@ Marshall Islands
 Mauritania
 Mauritius
 Mexico
-Federated States of Micronesia
+Micronesia
 Moldova
 Monaco
 Mongolia
@@ -143,12 +142,9 @@ Qatar
 Romania
 Russia
 Rwanda
-Saint Kitts and Nevis
 Saint Lucia
-Saint Vincent and the Grenadines
 Samoa
 San Marino
-Sao Tome and Principe
 Saudi Arabia
 Senegal
 Serbia

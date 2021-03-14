@@ -34,6 +34,7 @@ public class WordGeneration {  //This class has a method that can be called whic
         return splitWord;
     }
 
+
     private static String convertWord(String randomWord) {
         String upperWord = "";
             upperWord = randomWord.substring(0 ,randomWord.length()).toUpperCase();
@@ -50,14 +51,16 @@ public class WordGeneration {  //This class has a method that can be called whic
         }
         return test;
     }
-/*  //WORK IN PROGRESS
-    public static char[] correctGuess(char userGuess, char[] playerGuesses) {
-        char[] newPlayerGuesses = new char[playerGuesses.length];
+    //WORK IN PROGRESS
+    public static char[] correctGuess(char userGuess, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
+        char[] newPlayerGuesses = new char[playerGuesses.length];  //
         for (int i = 0; i<playerGuesses.length; i++) {
             if (userGuess == playerGuesses[i]) {
                 newPlayerGuesses[i] = userGuess;
+                System.out.println(userGuess);
+                System.out.println(newPlayerGuesses[i]);
             }
         }
         return newPlayerGuesses;
-    }*/
+    }
 }
