@@ -1,6 +1,6 @@
 # com.HangmanGame.HangmanGame
 
-Our Java Project for the Norfolk-Cambrdige programme - Hangman Game.
+Our Java Project for the Norfolk-Cambridge programme - Hangman Game.
 
 Our Project is to created a classic hangman game. It involves guessing letters of a word before the man 'dies' due to too many incorrect guesses forming the gallows.
 
