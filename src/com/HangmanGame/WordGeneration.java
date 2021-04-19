@@ -46,12 +46,11 @@ public class WordGeneration {  //This class has a method that can be called whic
         return test;  //Returns boolean of whether users guess was correct or not
     }
 
-    public static char[] correctGuess(char userGuess, char[] splitWord, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
+    public static void correctGuess(char userGuess, char[] splitWord, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
         for (int i = 0; i<splitWord.length; i++) {
             if (userGuess == splitWord[i]) { //If userGuess is the same as a letter in the word then the _ is changed to that letter
                 playerGuesses[i] = userGuess;  //Sets the _ to that letter
             }
         }
-        return playerGuesses;  //Returns this new array newPlayerGuesses back to original playerGuesses array
     }
 }
