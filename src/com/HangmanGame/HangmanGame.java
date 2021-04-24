@@ -51,7 +51,7 @@ class HangmanGame {
 
             if (WordGeneration.check(splitWord, userGuess)) {//If guessed letter is in word then sets the corresponding "_"'s to the correct letter
                 System.out.println("CORRECT GUESS");
-                playerGuesses = WordGeneration.correctGuess(userGuess, splitWord, playerGuesses);
+                WordGeneration.correctGuess(userGuess, splitWord, playerGuesses);
                 for (char playerGuess : playerGuesses) { //For each loop to cycle through playerGuesses array
                     System.out.print(playerGuess);  //Prints out the word with correctly guessed "_" filled in
                 }
