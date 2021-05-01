@@ -24,11 +24,8 @@ class HangmanGame {
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
         char[] playerGuesses = new char[wordLength];  //For loop to create an array of _ for each character in splitWord to be used for user guesses
-        for(
-        int i = 0;
-        i<wordLength;i++)
 
-        {
+        for(int i = 0; i<wordLength;i++) {
             if (splitWord[i] == ' ') playerGuesses[i] = ' ';
             else if (splitWord[i] == '\'') playerGuesses[i] = '\'';
             else playerGuesses[i] = '_';

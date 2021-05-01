@@ -9,11 +9,11 @@ import java.util.Scanner;
 public class WordGeneration {  //This class has a method that can be called which generates a random word from the .txt file "word_library.txt"
 
     private static int random(int listSize){  //Method for generating random number between 0 and list length
-        return (int) (Math.random() * (listSize+1));
+        return ((int) (Math.random() * (listSize+1)));
     }
 
     public static String generate() throws FileNotFoundException {
-        File file = new File("src/com/HangmanGame/word_library.txt");  //Reading file with words in
+        File file = new File("src/word_library.txt");  //Reading file with words in
         Scanner scan = new Scanner(file);
         List<String> words = new ArrayList<>();
 

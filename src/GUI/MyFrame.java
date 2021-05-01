@@ -12,7 +12,7 @@ public class MyFrame extends JFrame {
         this.setSize(500, 500); //sets dimensions of this
         this.setVisible(true); //makes this visible
 
-        ImageIcon Image = new ImageIcon("src/com/HangmanGame/GUI/Logo.png");
+        ImageIcon Image = new ImageIcon("src/GUI/Logo.png");
         this.setIconImage(Image.getImage());//Sets this image to Image
         this.getContentPane().setBackground(new Color(237, 244, 237)); //Changes background color
     }

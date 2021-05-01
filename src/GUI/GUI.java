@@ -7,7 +7,7 @@ public class GUI{
 
     public static void main(String[] args) {
 
-        ImageIcon image = new ImageIcon("src/com/HangmanGame/GUI/Logo.png");
+        ImageIcon image = new ImageIcon("src/GUI/Logo.png");
 
         //New frame with label
         JLabel label = new JLabel();
