@@ -2,28 +2,25 @@ package com.HangmanGame.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GUI {
-    private JButton Start;
-    private JPanel MenuPanel;
-
-    public GUI() {
-        Start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Start Game");
-            }
-        });
-    }
+public class GUI{
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Menu");
-        frame.setPreferredSize(new Dimension(600, 300));
-        frame.setContentPane(new GUI().MenuPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+
+        ImageIcon image = new ImageIcon("src/com/HangmanGame/GUI/Logo.png");
+
+        //New frame with label
+        JLabel label = new JLabel();
+        MyFrame myFrame = new MyFrame();
+
+        label.setText("Hangman");
+        label.setIcon(image);
+        label.setHorizontalTextPosition(JLabel.CENTER); //set text LEFT, CENTER or RIGHT of image icon
+        label.setVerticalTextPosition(JLabel.TOP);//set text vertical position
+        label.setForeground(Color.BLACK);
+        label.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,50)); //Sets font and style of text
+        label.setIconTextGap(100); //Sets space between text and image
+        myFrame.add(label);
+
     }
 }
