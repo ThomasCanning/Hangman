@@ -1,4 +1,4 @@
-package com.HangmanGame.GUI;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;

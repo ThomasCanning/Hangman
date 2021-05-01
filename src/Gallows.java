@@ -1,5 +1,3 @@
-package com.HangmanGame;
-
 public class Gallows {
 
     public static void draw(int incorrectGuesses) {
