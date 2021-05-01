@@ -20,6 +20,9 @@ public class GUI{
         label.setForeground(Color.BLACK);
         label.setFont(new Font("Arial Rounded MT Bold", Font.BOLD,50)); //Sets font and style of text
         label.setIconTextGap(100); //Sets space between text and image
+        //label.setBackground(Color.); //sets background color to black
+        //label.setOpaque(true);
+
         myFrame.add(label);
 
     }
