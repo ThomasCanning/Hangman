@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 public class MyFrame extends JFrame implements ActionListener {
 
@@ -63,7 +64,11 @@ public class MyFrame extends JFrame implements ActionListener {
             if (e.getSource() == startButton) {
                 mainPanel.setVisible(false);
                 System.out.println("Start");
-                //Code to start game
+                try {
+                    HangmanGame.game(0);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
             }
         }
 
