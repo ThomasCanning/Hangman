@@ -15,7 +15,7 @@ CONSISTS OF A LIST OF COUNTRIES AS AN EXAMPLE
 
 class HangmanGame {
 
-    private static void game(int gamesWon) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
+    public static void game(int gamesWon) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
         //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         //System.out.println(randomWord);
@@ -88,8 +88,7 @@ class HangmanGame {
 
 
     public static void main(String[] args) throws FileNotFoundException {
-        Intro.Welcome();   //This runs a method that prints out temporary intro text
-        int gamesWon = 0;
-        game(gamesWon);  //This runs an initial round of the game
+        MyFrame myFrame = new MyFrame();
+
     }
-}
+    }
