@@ -15,7 +15,7 @@ CONSISTS OF A LIST OF COUNTRIES AS AN EXAMPLE
 
 class HangmanGame {
 
-    public static void game(int gamesWon) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
+    public static void game(int gamesWon, int winStreak) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
         //------------------------------------------Setting up and generating random word-------------------------------------------------
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         //System.out.println(randomWord);
@@ -66,21 +66,27 @@ class HangmanGame {
         }
 
 //------------------------------------------What happens after a round------------------------------------------
+        //Insert highscore and text file system here somewhere
             System.out.println();
-            if (correctlyGuessed) System.out.println("Congratulations you guessed the word correctly");
+            if (correctlyGuessed) {
+                System.out.println("Congratulations you guessed the word correctly");
+                if (gamesWon > winStreak) winStreak = gamesWon;
+            }
+
             else System.out.println("Better luck next time, the word was " + randomWord);
             Scanner input = new Scanner(System.in);
+            System.out.println("Your current winstreak is " + winStreak);
             System.out.println("Would you like to play again (yes/no)");
             String playAgain = input.nextLine();
             if (playAgain.equals("yes") || playAgain.equals("YES") || playAgain.equals("Yes")) {
                 System.out.println();
-                game(gamesWon);//Repeats game
+                game(gamesWon, winStreak);//Repeats game
             }
             else {  //End of game script
-                if (gamesWon == 0) System.out.println("Unfortunately, you didn't win any games in this session");
-                else if (gamesWon == 1 ) System.out.println("Well done, you won 1 game this session");
-                else if (gamesWon >= 1 && gamesWon <= 3) System.out.println("Great job, you won " + gamesWon + " games this session!");
-                else System.out.println("Incredible! You won " + gamesWon + " games this session!");
+                if (winStreak == 0) System.out.println("Unfortunately, you didn't win any games in this session");
+                else if (winStreak == 1 ) System.out.println("Well done, your highest win streak was 1 game this session");
+                else if ( winStreak >= 1 && winStreak <= 3) System.out.println("Great job, your highest winstreak was " + winStreak + " games this session!");
+                else System.out.println("Incredible! Your highest winstreak was " + gamesWon + " games this session!");
                 System.out.println("Thanks for playing!");
                 }
             }
@@ -89,6 +95,7 @@ class HangmanGame {
 
     public static void main(String[] args) throws FileNotFoundException {
         MyFrame myFrame = new MyFrame();
+        //run game method
 
     }
     }

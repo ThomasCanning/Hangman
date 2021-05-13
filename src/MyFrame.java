@@ -65,7 +65,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 mainPanel.setVisible(false);
                 System.out.println("Start");
                 try {
-                    HangmanGame.game(0);
+                    HangmanGame.game(0,0);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
