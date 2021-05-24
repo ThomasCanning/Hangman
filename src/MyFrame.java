@@ -10,7 +10,7 @@ public class MyFrame extends JFrame implements ActionListener {
     JLabel label;
     JButton startButton;
     JPanel bottomPanel;
-    JPanel mainPanel;
+    static JPanel mainPanel;
 
     boolean start = false;
 
@@ -60,16 +60,18 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         @Override
-        public void actionPerformed (ActionEvent e){
+        public void actionPerformed (ActionEvent e)  {
             if (e.getSource() == startButton) {
-                mainPanel.setVisible(false);
                 System.out.println("Start");
+                this.mainPanel.setVisible(false);
                 try {
                     HangmanGame.game(0,0);
+
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
+
+            }
             }
         }
 
-    }

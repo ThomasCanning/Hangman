@@ -93,9 +93,12 @@ class HangmanGame {
 
 
 
+
     public static void main(String[] args) throws FileNotFoundException {
         MyFrame myFrame = new MyFrame();
+
         //run game method
+
 
     }
     }
