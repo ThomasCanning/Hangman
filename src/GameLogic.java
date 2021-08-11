@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -13,7 +15,7 @@ CONSISTS OF A LIST OF COUNTRIES AS AN EXAMPLE
 
 */
 
-class HangmanGame {
+class GameLogic {
 
     public static void game(int gamesWon, int winStreak) throws FileNotFoundException {  //Game is in a method so multiple rounds can be played
         //------------------------------------------Setting up and generating random word-------------------------------------------------
@@ -90,15 +92,4 @@ class HangmanGame {
                 System.out.println("Thanks for playing!");
                 }
             }
-
-
-
-
-    public static void main(String[] args) throws FileNotFoundException {
-        MyFrame myFrame = new MyFrame();
-
-        //run game method
-
-
-    }
     }

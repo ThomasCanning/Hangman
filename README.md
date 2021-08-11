@@ -1,4 +1,4 @@
-# com.HangmanGame.HangmanGame
+# com.GameLogic.GameLogic
 
 Our Java Project for the Norfolk-Cambridge programme - Hangman Game.
 
