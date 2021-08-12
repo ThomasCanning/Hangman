@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 
 public class GUI extends JFrame{
 
+    public static final int SCREEN_WIDTH = 1920;
+    public static final int SCREEN_HEIGHT = 1080;
+
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen(this);
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
@@ -27,7 +30,7 @@ public class GUI extends JFrame{
         this.setIconImage(taskbarImage.getImage());//Sets this image to Image
         this.getContentPane().setBackground(new Color(237, 244, 237)); //Changes background color
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(1920, 1080));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.add(panelContent);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Sets what happens when X is pressed (closes application)
         this.setResizable(false);
@@ -42,5 +45,25 @@ public class GUI extends JFrame{
                 cl.show(panelContent, "2");
             }
         });
+
+        //Defines what happens when keyboard is pressed
+        for(int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+            mainScreen.keyboardButtons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String keyboardInput =  e.getActionCommand();
+
+                    //This character is player input
+                    char playerGuess = keyboardInput.charAt(0);
+
+                    for(int i =0; i < mainScreen.keyboardButtons.length; i++) {
+                        if (mainScreen.keyboardButtons[i] == e.getSource()) {
+                            mainScreen.keyboardButtons[i].setEnabled(false);
+                        }
+                    }
+                }
+            });
+        }
+
         }
     }

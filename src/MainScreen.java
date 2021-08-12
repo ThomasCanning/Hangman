@@ -12,31 +12,32 @@ public class MainScreen extends JPanel {
     final ImageIcon hangman5 = new ImageIcon("Hangman5.png");
     final ImageIcon hangman6 = new ImageIcon("Hangman6.png");
     final ImageIcon hangman7 = new ImageIcon("Hangman7.png");
-    private int incorrectGuesses = 0;
-    private int wordlength = 5;
+    private int incorrectGuesses = 6;
+    private String word = "test test test";
+    JButton[] keyboardButtons = new JButton[26];
 
     MainScreen(GUI parent) {
 
         this.setLayout(new BorderLayout());
         JPanel bottomPanel = new JPanel();
+
         bottomPanel.setPreferredSize(new Dimension(1000, 320));
         bottomPanel.setLayout((new FlowLayout()));
         this.add(bottomPanel, BorderLayout.SOUTH);
+        int i = 0;
         for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
-            System.out.println(alphabet);
-            JButton button = new JButton(String.valueOf(alphabet));
-            button.setPreferredSize(new Dimension(170, 90));
-            bottomPanel.add(button);
+            keyboardButtons[i] = new JButton(String.valueOf(alphabet));
+            keyboardButtons[i].setPreferredSize(new Dimension(170, 90));
+            bottomPanel.add(keyboardButtons[i]);
+            i++;
         }
         UpdateHangman(incorrectGuesses);
-        DrawWordDisplay(wordlength);
-
-
+        DrawWordDisplay(word);
     }
 
     public void SetIncorrectGuesses(int newIncorrectGuesses) {this.incorrectGuesses = newIncorrectGuesses;}
 
-    public void SetWordLength (int newWordLength) {this.wordlength = newWordLength;}
+    public void SetWord (String newWord) {this.word = newWord;}
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -83,9 +84,28 @@ public class MainScreen extends JPanel {
                g2D.drawImage(hangman5.getImage(), 200, -100, null);
                g2D.drawImage(hangman6.getImage(), 200, -100, null);
                g2D.drawImage(hangman7.getImage(), 200, -100, null);
+               break;
+       }
 
+       g2D.setFont(new Font(Font.MONOSPACED, Font.ROMAN_BASELINE, 100));
+       FontMetrics metrics = getFontMetrics(g.getFont());
+       g2D.drawString(word, ((GUI.SCREEN_WIDTH/2)-(metrics.stringWidth(word))/2), 600);
+       g2D.setBackground(Color.DARK_GRAY);
 
-        }
+       int[] characterWidth = new int[word.length()];
+       int spaceAlongLine = 0;
+       for (int i = 0; i < word.length(); i++) {
+           char character = word.charAt(i);
+           if (character == ' ') {
+               spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
+           }
+           else {
+               g.setColor(Color.DARK_GRAY);
+               g.fillRect((((GUI.SCREEN_WIDTH/2)-(metrics.stringWidth(word))/2)+6) + spaceAlongLine, 620, metrics.charWidth(character) -6, 20);
+               spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
+           }
+
+       }
 
     }
 
@@ -94,8 +114,8 @@ public class MainScreen extends JPanel {
         repaint();
     }
 
-    public void DrawWordDisplay(int wordlength) {
-        SetWordLength(wordlength);
+    public void DrawWordDisplay(String word) {
+        SetWord(word);
         repaint();
     }
 
