@@ -38,7 +38,7 @@ class GameLogic {
         boolean correctlyGuessed = false;
 
         for(
-        int incorrectGuesses = 0; (incorrectGuesses< 7)&&(!correctlyGuessed); )
+        int incorrectGuesses = 0; (incorrectGuesses< 6)&&(!correctlyGuessed); )
 
         {//Loop until Hangman is hung or word is correctly guessed
 
