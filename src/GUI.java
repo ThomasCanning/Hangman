@@ -3,11 +3,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
 
-public class GUI extends JFrame{
+public class GUI extends JFrame {
 
     public static final int SCREEN_WIDTH = 1920;
     public static final int SCREEN_HEIGHT = 1080;
+    public static final int INCORRECT_GUSSES_LIMIT = 6;
+
+    public static int gamesWon = 0;
+    private char playerGuess;
+    public static boolean correctlyGuessed;
+    private static char[] splitWord;
+    private static char[] playerGuesses;
+    private static int incorrectGuesses = 0;
+    private String randomWord;
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen(this);
@@ -39,31 +50,85 @@ public class GUI extends JFrame{
         this.setLocationRelativeTo(null);
 
         //Defines what happens when start button pressed
-        startScreen.startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "2");
+        startScreen.startButton.addActionListener(e -> {
+            try {
+                HangmanRound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
             }
+            cl.show(panelContent, "2");
         });
 
         //Defines what happens when keyboard is pressed
-        for(int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-            mainScreen.keyboardButtons[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String keyboardInput =  e.getActionCommand();
+        for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+            mainScreen.keyboardButtons[i].addActionListener(e -> {
+                String keyboardInput = e.getActionCommand();
 
-                    //This character is player input
-                    char playerGuess = keyboardInput.charAt(0);
+                //This character is player input
+                playerGuess = keyboardInput.charAt(0);
 
-                    for(int i =0; i < mainScreen.keyboardButtons.length; i++) {
-                        if (mainScreen.keyboardButtons[i] == e.getSource()) {
-                            mainScreen.keyboardButtons[i].setEnabled(false);
-                        }
+                for (int i1 = 0; i1 < mainScreen.keyboardButtons.length; i1++) {
+                    if (mainScreen.keyboardButtons[i1] == e.getSource()) {
+                        mainScreen.keyboardButtons[i1].setEnabled(false);
+                        mainScreen.SetPlayerGuess(playerGuess);
+                        HangmanGuess(playerGuess);
                     }
                 }
             });
         }
 
+        //Reset button
+        mainScreen.resetButton.addActionListener(e -> {
+            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+                mainScreen.keyboardButtons[i].setEnabled(true);
+            }
+        });
+    }
+
+    private void SetPlayerGuess(char newPlayerGuess) {
+        this.playerGuess = newPlayerGuess;
+
+    }
+
+    public void HangmanRound() throws FileNotFoundException {
+
+        incorrectGuesses = 0;
+        correctlyGuessed = false;
+        randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
+        splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
+        mainScreen.SetWord(randomWord);
+
+        int wordLength = splitWord.length;  //Stores length of word as a variable
+
+        //Sets up an array of underscores for each of the characters in the word, and leaves gaps for spaces
+        playerGuesses = new char[wordLength];
+        for (int i = 0; i < wordLength; i++) {
+            if (splitWord[i] == '\'') playerGuesses[i] = '\'';
+            else playerGuesses[i] = ' ';
+            System.out.print(playerGuesses[i]);
+        }
+        mainScreen.DrawWordDisplay(playerGuesses);
+    }
+
+    public void HangmanGuess(char newPlayerGuess) {
+
+        //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
+
+        if ((incorrectGuesses < INCORRECT_GUSSES_LIMIT) && (!correctlyGuessed)) {//Loop until Hangman is hung or word is correctly guessed
+
+            playerGuess = Character.toUpperCase(playerGuess);  //Converting user input to upper case
+
+            if (WordGeneration.check(splitWord, playerGuess)) {//If guessed letter is in word then sets the corresponding "_"'s to the correct letter
+                playerGuesses = WordGeneration.correctGuess(playerGuess, splitWord, playerGuesses);
+                mainScreen.DrawWordDisplay(playerGuesses);
+                correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
+                if (correctlyGuessed) gamesWon++;
+            }
+            else{
+                incorrectGuesses++;
+                mainScreen.UpdateHangman(incorrectGuesses);
+            }
         }
     }
+}
+
