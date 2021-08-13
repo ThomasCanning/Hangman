@@ -1,27 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class GUI extends JFrame {
 
     public static final int SCREEN_WIDTH = 1920;
     public static final int SCREEN_HEIGHT = 1080;
-    public static final int INCORRECT_GUSSES_LIMIT = 6;
+    public static final int INCORRECT_GUESSES_LIMIT = 6;
 
-    public static int gamesWon = 0;
+    private static int gamesWon = 0;
     private char playerGuess;
     public static boolean correctlyGuessed;
     private static char[] splitWord;
     private static char[] playerGuesses;
     private static int incorrectGuesses = 0;
-    private String randomWord;
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen(this);
+    ContinueScreen continueScreen = new ContinueScreen(this);
+    EndScreen endScreen = new EndScreen(this);
+
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
     CardLayout cl = new CardLayout();   //creates a card layout
 
@@ -34,6 +33,7 @@ public class GUI extends JFrame {
         panelContent.setLayout(cl);
         panelContent.add(startScreen, "1");
         panelContent.add(mainScreen, "2");
+        panelContent.add(continueScreen, "3");
         cl.show(panelContent, "1");
 
         //Sets up the details of the main frame
@@ -71,30 +71,32 @@ public class GUI extends JFrame {
                     if (mainScreen.keyboardButtons[i1] == e.getSource()) {
                         mainScreen.keyboardButtons[i1].setEnabled(false);
                         mainScreen.SetPlayerGuess(playerGuess);
-                        HangmanGuess(playerGuess);
+                        HangmanGuess();
                     }
                 }
             });
         }
 
-        //Reset button
-        mainScreen.resetButton.addActionListener(e -> {
-            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-                mainScreen.keyboardButtons[i].setEnabled(true);
+        //Continue button
+        continueScreen.continueButton.addActionListener(e -> {
+            try {
+                //Resets buttons
+                for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+                    mainScreen.keyboardButtons[i].setEnabled(true);
+                }
+                HangmanRound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
             }
+            cl.show(panelContent, "2");
         });
-    }
-
-    private void SetPlayerGuess(char newPlayerGuess) {
-        this.playerGuess = newPlayerGuess;
-
     }
 
     public void HangmanRound() throws FileNotFoundException {
 
         incorrectGuesses = 0;
         correctlyGuessed = false;
-        randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
+        String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
         mainScreen.SetWord(randomWord);
 
@@ -110,25 +112,38 @@ public class GUI extends JFrame {
         mainScreen.DrawWordDisplay(playerGuesses);
     }
 
-    public void HangmanGuess(char newPlayerGuess) {
+    public void HangmanGuess() {
 
         //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
 
-        if ((incorrectGuesses < INCORRECT_GUSSES_LIMIT) && (!correctlyGuessed)) {//Loop until Hangman is hung or word is correctly guessed
+        if ((incorrectGuesses < INCORRECT_GUESSES_LIMIT) && (!correctlyGuessed)) {//Loop until Hangman is hung or word is correctly guessed
+            System.out.println("1");
 
             playerGuess = Character.toUpperCase(playerGuess);  //Converting user input to upper case
 
-            if (WordGeneration.check(splitWord, playerGuess)) {//If guessed letter is in word then sets the corresponding "_"'s to the correct letter
-                playerGuesses = WordGeneration.correctGuess(playerGuess, splitWord, playerGuesses);
+            if (WordGeneration.check(splitWord, playerGuess)) {//checks if player guess was correct
+                playerGuesses = WordGeneration.correctGuess(playerGuess, splitWord, playerGuesses); //Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
                 correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
-                if (correctlyGuessed) gamesWon++;
+                if (correctlyGuessed) {
+                    gamesWon++;
+                    continueScreen.DisplayGamesWon();
+                    cl.show(panelContent, "3");
+                    System.out.println("test");
+                }
             }
             else{
                 incorrectGuesses++;
                 mainScreen.UpdateHangman(incorrectGuesses);
             }
         }
+        else {
+            mainScreen.GameOver();
+            //end screen
+        }
+    }
+    public static String GetGamesWon() {
+        return new String(String.valueOf(gamesWon));
     }
 }
 

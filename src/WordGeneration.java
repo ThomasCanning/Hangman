@@ -20,7 +20,7 @@ public class WordGeneration {  //This class has a method that can be called whic
         for (int i = 0; scan.hasNextLine(); i++) {  //For loop to add all words in file to a list
             words.add(i, scan.nextLine());
         }
-        return words.get(WordGeneration.random(words.size()));
+        return words.get(WordGeneration.random(words.size()-1));
     }
 
     public static char[] splitWord(String randomWord) {  //Turns random word string into an array of characters that is easier to work with

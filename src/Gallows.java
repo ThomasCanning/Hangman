@@ -1,5 +1,7 @@
 public class Gallows {
 
+    //This class has been made obsolete by the GUI
+
     public static void draw(int incorrectGuesses) {
         switch (incorrectGuesses) {
             case 1 -> {

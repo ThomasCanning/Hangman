@@ -14,10 +14,8 @@ public class MainScreen extends JPanel {
 
     private String word;
     private String playerGuesses;
-    private char playerGuess;
 
     JButton[] keyboardButtons = new JButton[26];
-    JButton resetButton = new JButton("RESET");
 
     MainScreen(GUI parent) {
 
@@ -37,12 +35,10 @@ public class MainScreen extends JPanel {
         }
         UpdateHangman(incorrectGuesses);
 
-        this.add(resetButton, BorderLayout.NORTH);
     }
 
     public void SetPlayerGuess(char newPlayerGuess) {
-        this.playerGuess = newPlayerGuess;
-        System.out.println("input " + playerGuess);
+        System.out.println("input " + newPlayerGuess);
     }
 
     public void SetIncorrectGuesses(int newIncorrectGuesses) {this.incorrectGuesses = newIncorrectGuesses;}
@@ -60,40 +56,38 @@ public class MainScreen extends JPanel {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
         switch (incorrectGuesses) {
-            case 0:
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                break;
-            case 1:
+            case 0 -> g2D.drawImage(hangman1.getImage(), 200, -100, null);
+            case 1 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
                 g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
                 g2D.drawImage(hangman3.getImage(), 200, -100, null);
                 g2D.drawImage(hangman4.getImage(), 200, -100, null);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
                 g2D.drawImage(hangman3.getImage(), 200, -100, null);
                 g2D.drawImage(hangman4.getImage(), 200, -100, null);
                 g2D.drawImage(hangman5.getImage(), 200, -100, null);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
                 g2D.drawImage(hangman3.getImage(), 200, -100, null);
                 g2D.drawImage(hangman4.getImage(), 200, -100, null);
                 g2D.drawImage(hangman5.getImage(), 200, -100, null);
                 g2D.drawImage(hangman6.getImage(), 200, -100, null);
-                break;
-            case 6:
+            }
+            case 6 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
                 g2D.drawImage(hangman3.getImage(), 200, -100, null);
@@ -101,13 +95,13 @@ public class MainScreen extends JPanel {
                 g2D.drawImage(hangman5.getImage(), 200, -100, null);
                 g2D.drawImage(hangman6.getImage(), 200, -100, null);
                 g2D.drawImage(hangman7.getImage(), 200, -100, null);
-                break;
+            }
         }
 
         System.out.println(word);
         if (playerGuesses != null) {
 
-            g2D.setFont(new Font(Font.MONOSPACED, Font.ROMAN_BASELINE, 100));
+            g2D.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 100));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g2D.drawString(playerGuesses, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(playerGuesses)) / 2), 600);
             g2D.setBackground(Color.DARK_GRAY);
@@ -136,4 +130,7 @@ public class MainScreen extends JPanel {
         repaint();
     }
 
+    public void GameOver() {
+
+    }
 }
