@@ -37,10 +37,6 @@ public class MainScreen extends JPanel {
 
     }
 
-    public void SetPlayerGuess(char newPlayerGuess) {
-        System.out.println("input " + newPlayerGuess);
-    }
-
     public void SetIncorrectGuesses(int newIncorrectGuesses) {this.incorrectGuesses = newIncorrectGuesses;}
 
     public void SetWord (String newWord) {
@@ -97,16 +93,18 @@ public class MainScreen extends JPanel {
                 g2D.drawImage(hangman7.getImage(), 200, -100, null);
             }
         }
-
-        System.out.println(word);
         if (playerGuesses != null) {
 
             g2D.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 100));
             FontMetrics metrics = getFontMetrics(g.getFont());
-            g2D.drawString(playerGuesses, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(playerGuesses)) / 2), 600);
-            g2D.setBackground(Color.DARK_GRAY);
+
+            if (incorrectGuesses != GUI.INCORRECT_GUESSES_LIMIT) {
+                g2D.drawString(playerGuesses, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(playerGuesses)) / 2), 600);
+                g2D.setBackground(Color.DARK_GRAY);
+            }
 
             int spaceAlongLine = 0;
+
             for (int i = 0; i < word.length(); i++) {
                 char character = word.charAt(i);
                 if (character == ' ') {
@@ -116,6 +114,10 @@ public class MainScreen extends JPanel {
                     g.fillRect((((GUI.SCREEN_WIDTH / 2) - ((metrics.stringWidth(word))+4) / 2) + 6) + spaceAlongLine, 620, metrics.charWidth(character) - 6, 20);
                     spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
                 }
+            }
+            if (incorrectGuesses == GUI.INCORRECT_GUESSES_LIMIT) {
+                g2D.setColor(Color.RED);
+                g2D.drawString(word, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(word)) / 2), 600);
             }
         }
     }
@@ -130,7 +132,5 @@ public class MainScreen extends JPanel {
         repaint();
     }
 
-    public void GameOver() {
 
-    }
 }

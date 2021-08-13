@@ -70,7 +70,6 @@ public class GUI extends JFrame {
                 for (int i1 = 0; i1 < mainScreen.keyboardButtons.length; i1++) {
                     if (mainScreen.keyboardButtons[i1] == e.getSource()) {
                         mainScreen.keyboardButtons[i1].setEnabled(false);
-                        mainScreen.SetPlayerGuess(playerGuess);
                         HangmanGuess();
                     }
                 }
@@ -99,6 +98,7 @@ public class GUI extends JFrame {
         String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
         mainScreen.SetWord(randomWord);
+        System.out.println(randomWord);
 
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
@@ -107,7 +107,6 @@ public class GUI extends JFrame {
         for (int i = 0; i < wordLength; i++) {
             if (splitWord[i] == '\'') playerGuesses[i] = '\'';
             else playerGuesses[i] = ' ';
-            System.out.print(playerGuesses[i]);
         }
         mainScreen.DrawWordDisplay(playerGuesses);
     }
@@ -117,7 +116,6 @@ public class GUI extends JFrame {
         //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
 
         if ((incorrectGuesses < INCORRECT_GUESSES_LIMIT) && (!correctlyGuessed)) {//Loop until Hangman is hung or word is correctly guessed
-            System.out.println("1");
 
             playerGuess = Character.toUpperCase(playerGuess);  //Converting user input to upper case
 
@@ -129,7 +127,6 @@ public class GUI extends JFrame {
                     gamesWon++;
                     continueScreen.DisplayGamesWon();
                     cl.show(panelContent, "3");
-                    System.out.println("test");
                 }
             }
             else{
@@ -138,9 +135,9 @@ public class GUI extends JFrame {
             }
         }
         else {
-            mainScreen.GameOver();
-            //end screen
+            mainScreen.UpdateHangman(incorrectGuesses);
         }
+
     }
     public static String GetGamesWon() {
         return new String(String.valueOf(gamesWon));
