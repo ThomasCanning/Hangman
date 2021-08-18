@@ -37,7 +37,7 @@ public class EndScreen extends JPanel {
 
         g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g2D.drawString("Final Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 200);
+        g2D.drawString("Final Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Final Score: " + GUI.GetGamesWon())) / 2), 200);
         g2D.setBackground(Color.DARK_GRAY);
     }
     public void DisplayGamesWon() {

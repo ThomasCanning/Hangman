@@ -93,15 +93,17 @@ public class GUI extends JFrame {
         //Continue button
         continueScreen.continueButton.addActionListener(e -> {
             try {
-                //Resets buttons
+                cl.show(panelContent, "2");
+                System.out.println("new round");
+                //Resets keyboard
                 for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
                     mainScreen.keyboardButtons[i].setEnabled(true);
                 }
+                mainScreen.UpdateHangman(0);
                 HangmanRound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
-            cl.show(panelContent, "2");
         });
 
         //main screen endRoundButton
