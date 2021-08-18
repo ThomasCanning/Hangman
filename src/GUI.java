@@ -79,6 +79,10 @@ public class GUI extends JFrame {
                             for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
                                 mainScreen.keyboardButtons[i2].setVisible(false);
                             }
+                            for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
+                                mainScreen.blankButtons[i2].setVisible(false);
+                            }
+
                             mainScreen.bottomPanel.add(mainScreen.endRoundButton);
                         }
                     }
@@ -99,11 +103,27 @@ public class GUI extends JFrame {
             }
             cl.show(panelContent, "2");
         });
-        //endRoundButton
+
+        //main screen endRoundButton
         mainScreen.endRoundButton.addActionListener(e -> {
             cl.show(panelContent, "4");
         });
 
+        //Continue screen end round button
+
+        //end screen quit game button
+        endScreen.quitGameButton.addActionListener(e -> {
+            System.exit(0);
+        });
+
+        //end screen play again button
+        endScreen.newGameButton.addActionListener(e -> {
+            try {
+                HangmanRound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
     }
 
     public void HangmanRound() throws FileNotFoundException {

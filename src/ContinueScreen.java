@@ -3,7 +3,8 @@ import java.awt.*;
 
 public class ContinueScreen extends JPanel {
 
-    JButton continueButton = new JButton();
+    JButton continueButton = new JButton("Continue");
+    JButton endRoundButton = new JButton("End Round");
 
     public ContinueScreen(GUI parent) {
         this.setLayout(new BorderLayout());
@@ -17,11 +18,15 @@ public class ContinueScreen extends JPanel {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(1000, 150));
 
-        continueButton.setText("Continue");
         continueButton.setFocusable(false);
         continueButton.setPreferredSize(new Dimension(300, 100));
         bottomPanel.add(continueButton);
         continueButton.setVerticalAlignment(JButton.CENTER);
+
+        endRoundButton.setFocusable(false);
+        endRoundButton.setPreferredSize(new Dimension(300, 100));
+        bottomPanel.add(endRoundButton);
+        endRoundButton.setVerticalAlignment(JButton.CENTER);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
         this.add(label);
