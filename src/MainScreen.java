@@ -133,7 +133,19 @@ public class MainScreen extends JPanel {
             FontMetrics metrics = getFontMetrics(g.getFont());
 
             if (incorrectGuesses != GUI.INCORRECT_GUESSES_LIMIT) {
-                g2D.drawString(playerGuesses, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(playerGuesses)) / 2), 600);
+
+                //Ensures characters that are displayed are of the correct case
+                StringBuilder newDisplayWord = new StringBuilder(playerGuesses);
+                for(int i = 0; i < word.length(); i++) {
+                    if ((playerGuesses.charAt(i)!=word.charAt(i))&&(playerGuesses.charAt(i)!=' ')) {
+                        newDisplayWord.setCharAt(i, Character.toLowerCase(playerGuesses.charAt(i)));
+                    }
+                    else
+                        newDisplayWord.setCharAt(i, playerGuesses.charAt(i));
+                }
+
+                //Draws the word that has been guessed so far
+                g2D.drawString(String.valueOf(newDisplayWord), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(playerGuesses)) / 2), 600);
                 g2D.setBackground(Color.DARK_GRAY);
             }
 

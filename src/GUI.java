@@ -130,8 +130,8 @@ public class GUI extends JFrame {
 
         incorrectGuesses = 0;
         correctlyGuessed = false;
-        String randomWord = WordGeneration.generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
-        splitWord = WordGeneration.splitWord(randomWord);  //Runs method that split word into an array of characters
+        String randomWord = WordGeneration.Generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
+        splitWord = WordGeneration.SplitWord(randomWord);  //Runs method that split word into an array of characters
         mainScreen.SetWord(randomWord);
         System.out.println(randomWord);
 
@@ -154,8 +154,8 @@ public class GUI extends JFrame {
 
             playerGuess = Character.toUpperCase(playerGuess);  //Converting user input to upper case
 
-            if (WordGeneration.check(splitWord, playerGuess)) {//checks if player guess was correct
-                playerGuesses = WordGeneration.correctGuess(playerGuess, splitWord, playerGuesses); //Updates playerGuesses array with new guess
+            if (WordGeneration.Check(splitWord, playerGuess)) {//checks if player guess was correct
+                playerGuesses = WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses); //Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
                 correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
                 if (correctlyGuessed) {
