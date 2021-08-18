@@ -26,7 +26,7 @@ public class GUI extends JFrame {
     CardLayout cl = new CardLayout();   //creates a card layout
 
     //creates GUI elements
-    ImageIcon taskbarImage = new ImageIcon("TaskBarImage.png");
+    ImageIcon taskbarImage = new ImageIcon(getClass().getClassLoader().getResource("TaskBarImage.png"));
 
     public GUI() throws IOException {
 

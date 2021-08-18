@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainScreen extends JPanel {
-    final ImageIcon hangman1 = new ImageIcon("res/Hangman1.png");
-    final ImageIcon hangman2 = new ImageIcon("res/Hangman2.png");
-    final ImageIcon hangman3 = new ImageIcon("res/Hangman3.png");
-    final ImageIcon hangman4 = new ImageIcon("res/Hangman4.png");
-    final ImageIcon hangman5 = new ImageIcon("res/Hangman5.png");
-    final ImageIcon hangman6 = new ImageIcon("res/Hangman6.png");
-    final ImageIcon hangman7 = new ImageIcon("res/Hangman7.png");
+    final ImageIcon hangman1 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman1.png"));
+    final ImageIcon hangman2 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman2.png"));
+    final ImageIcon hangman3 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman3.png"));
+    final ImageIcon hangman4 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman4.png"));
+    final ImageIcon hangman5 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman5.png"));
+    final ImageIcon hangman6 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman6.png"));
+    final ImageIcon hangman7 = new ImageIcon(getClass().getClassLoader().getResource("res/Hangman7.png"));
 
     private int incorrectGuesses = 0;
 
