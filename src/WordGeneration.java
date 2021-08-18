@@ -13,7 +13,7 @@ public class WordGeneration {  //This class has a method that can be called whic
     }
 
     public static String generate() throws FileNotFoundException {
-        File file = new File("src/word_library.txt");  //Reading file with words in
+        File file = new File("res/word_library.txt");  //Reading file with words in
         Scanner scan = new Scanner(file);
         List<String> words = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class GUI extends JFrame {
@@ -27,7 +28,7 @@ public class GUI extends JFrame {
     //creates GUI elements
     ImageIcon taskbarImage = new ImageIcon("TaskBarImage.png");
 
-    public GUI() {
+    public GUI() throws IOException {
 
         //Sets up card layout that allows different panels to be swapped (game screens)
         panelContent.setLayout(cl);

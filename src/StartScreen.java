@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class StartScreen extends JPanel{
 
@@ -10,8 +11,8 @@ public class StartScreen extends JPanel{
     StartScreen(GUI parent) { //Start screen panel GUI
         this.setLayout(new BorderLayout());
 
-        java.net.URL startScreenImageURL = getClass().getResource("StartScreenImage.png");
-        Icon startScreenImage = new ImageIcon(startScreenImageURL );
+        ImageIcon startScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
+
         JLabel label = new JLabel();
         label.setIcon(startScreenImage);
         label.setHorizontalAlignment(JLabel.CENTER);
