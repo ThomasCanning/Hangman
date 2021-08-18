@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -35,6 +37,7 @@ public class GUI extends JFrame {
         panelContent.add(startScreen, "1");
         panelContent.add(mainScreen, "2");
         panelContent.add(continueScreen, "3");
+        panelContent.add(endScreen, "4");
         cl.show(panelContent, "1");
 
         //Sets up the details of the main frame
@@ -72,6 +75,12 @@ public class GUI extends JFrame {
                     if (mainScreen.keyboardButtons[i1] == e.getSource()) {
                         mainScreen.keyboardButtons[i1].setEnabled(false);
                         HangmanGuess();
+                        if(incorrectGuesses == INCORRECT_GUESSES_LIMIT) {
+                            for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
+                                mainScreen.keyboardButtons[i2].setVisible(false);
+                            }
+                            mainScreen.bottomPanel.add(mainScreen.endRoundButton);
+                        }
                     }
                 }
             });
@@ -90,6 +99,11 @@ public class GUI extends JFrame {
             }
             cl.show(panelContent, "2");
         });
+        //endRoundButton
+        mainScreen.endRoundButton.addActionListener(e -> {
+            cl.show(panelContent, "4");
+        });
+
     }
 
     public void HangmanRound() throws FileNotFoundException {

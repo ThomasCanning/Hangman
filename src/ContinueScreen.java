@@ -7,7 +7,7 @@ public class ContinueScreen extends JPanel {
 
     public ContinueScreen(GUI parent) {
         this.setLayout(new BorderLayout());
-        ImageIcon continueScreenImage = new ImageIcon("StartScreenImage.png");
+        ImageIcon continueScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
         JLabel label = new JLabel();
         label.setIcon(continueScreenImage);
         label.setHorizontalAlignment(JLabel.CENTER);

@@ -10,29 +10,54 @@ public class MainScreen extends JPanel {
     final ImageIcon hangman6 = new ImageIcon(getClass().getClassLoader().getResource("Hangman6.png"));
     final ImageIcon hangman7 = new ImageIcon(getClass().getClassLoader().getResource("Hangman7.png"));
 
+    final char[] QWERTY = {'q','w','e','r', 't','y','u','i','o','p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','z','x','c','v','b','n','m'};
+
     private int incorrectGuesses = 0;
 
     private String word;
     private String playerGuesses;
 
     JButton[] keyboardButtons = new JButton[26];
+    JButton endRoundButton = new JButton("Continue");
+    JPanel bottomPanel = new JPanel();
+    JButton[] blankButtons = new JButton[3];
 
     MainScreen(GUI parent) {
 
+        for(int i = 0; i < 3; i++) {
+            blankButtons[i] = new JButton();
+            blankButtons[i].setOpaque(false);
+            blankButtons[i].setContentAreaFilled(false);
+            blankButtons[i].setBorderPainted(false);
+        }
+
         this.setLayout(new BorderLayout());
-        JPanel bottomPanel = new JPanel();
 
         bottomPanel.setPreferredSize(new Dimension(1000, 320));
         bottomPanel.setLayout((new FlowLayout()));
         this.add(bottomPanel, BorderLayout.SOUTH);
         int i = 0;
-        for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
-            keyboardButtons[i] = new JButton(String.valueOf(alphabet));
+        for (i = 0; i <= 25; i++) {
+            if(QWERTY[i] == 'a') {
+                blankButtons[0].setPreferredSize(new Dimension(20, 90));
+                blankButtons[1].setPreferredSize(new Dimension(127, 90));
+                bottomPanel.add(blankButtons[0]);
+                bottomPanel.add(blankButtons[1]);
+            }
+            else if (QWERTY[i] == 'z') {
+                blankButtons[2].setPreferredSize(new Dimension(85, 90));
+                bottomPanel.add(blankButtons[2]);
+
+            }
+            keyboardButtons[i] = new JButton(String.valueOf(QWERTY[i]));
             keyboardButtons[i].setPreferredSize(new Dimension(170, 90));
-            keyboardButtons[i].setActionCommand(String.valueOf(alphabet));
+            keyboardButtons[i].setActionCommand(String.valueOf(QWERTY[i]));
             bottomPanel.add(keyboardButtons[i]);
-            i++;
+
         }
+        endRoundButton.setPreferredSize(new Dimension(300, 100));
+        endRoundButton.setFocusable(false);
+        endRoundButton.setVisible(true);
         UpdateHangman(incorrectGuesses);
 
     }
@@ -92,6 +117,15 @@ public class MainScreen extends JPanel {
                 g2D.drawImage(hangman6.getImage(), 200, -100, null);
                 g2D.drawImage(hangman7.getImage(), 200, -100, null);
             }
+            default -> {
+                g2D.drawImage(hangman1.getImage(), 200, -100, null);
+                g2D.drawImage(hangman2.getImage(), 200, -100, null);
+                g2D.drawImage(hangman3.getImage(), 200, -100, null);
+                g2D.drawImage(hangman4.getImage(), 200, -100, null);
+                g2D.drawImage(hangman5.getImage(), 200, -100, null);
+                g2D.drawImage(hangman6.getImage(), 200, -100, null);
+                g2D.drawImage(hangman7.getImage(), 200, -100, null);
+            }
         }
         if (playerGuesses != null) {
 
@@ -116,8 +150,14 @@ public class MainScreen extends JPanel {
                 }
             }
             if (incorrectGuesses == GUI.INCORRECT_GUESSES_LIMIT) {
+                //What happens when fail
                 g2D.setColor(Color.RED);
                 g2D.drawString(word, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(word)) / 2), 600);
+
+                //remove keyboard and replace with continue button
+                for (int i = 0; i < this.keyboardButtons.length; i++) {
+
+                }
             }
         }
     }
