@@ -10,7 +10,8 @@ public class StartScreen extends JPanel{
     StartScreen(GUI parent) { //Start screen panel GUI
         this.setLayout(new BorderLayout());
 
-        ImageIcon startScreenImage = new ImageIcon("StartScreenImage.png");
+        java.net.URL startScreenImageURL = getClass().getResource("StartScreenImage.png");
+        Icon startScreenImage = new ImageIcon(startScreenImageURL );
         JLabel label = new JLabel();
         label.setIcon(startScreenImage);
         label.setHorizontalAlignment(JLabel.CENTER);
