@@ -52,6 +52,7 @@ public class MainScreen extends JPanel {
             keyboardButtons[i] = new JButton(String.valueOf(QWERTY[i]));
             keyboardButtons[i].setPreferredSize(new Dimension(170, 90));
             keyboardButtons[i].setActionCommand(String.valueOf(QWERTY[i]));
+            keyboardButtons[i].setFocusable(false);
             bottomPanel.add(keyboardButtons[i]);
 
         }
