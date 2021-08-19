@@ -21,7 +21,6 @@ public class GUI extends JFrame {
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen(this);
-    ContinueScreen continueScreen = new ContinueScreen(this);
     EndScreen endScreen = new EndScreen(this);
 
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
@@ -36,8 +35,7 @@ public class GUI extends JFrame {
         panelContent.setLayout(cl);
         panelContent.add(startScreen, "1");
         panelContent.add(mainScreen, "2");
-        panelContent.add(continueScreen, "3");
-        panelContent.add(endScreen, "4");
+        panelContent.add(endScreen, "3");
         cl.show(panelContent, "1");
 
         //Sets up the details of the main frame
@@ -83,15 +81,30 @@ public class GUI extends JFrame {
                                 mainScreen.blankButtons[i2].setVisible(false);
                             }
 
-                            mainScreen.bottomPanel.add(mainScreen.endRoundButton);
+                            mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
                         }
                     }
                 }
             });
         }
 
-        //Continue button
-        continueScreen.continueButton.addActionListener(e -> {
+
+        //main screen quit button
+        mainScreen.quitRoundButton.addActionListener(e -> {
+            cl.show(panelContent, "3");
+        });
+
+        //main screen next round button
+        mainScreen.nextRoundButton.addActionListener(e -> {
+            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
+            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
+            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+                mainScreen.keyboardButtons[i].setVisible(true);
+            }
+            for (int i = 0; i < mainScreen.blankButtons.length; i++) {
+                mainScreen.blankButtons[i].setVisible(true);
+            }
+
             try {
                 cl.show(panelContent, "2");
                 System.out.println("new round");
@@ -106,16 +119,6 @@ public class GUI extends JFrame {
             }
         });
 
-        //main screen endRoundButton
-        mainScreen.endRoundButton.addActionListener(e -> {
-            cl.show(panelContent, "4");
-        });
-
-        //Continue screen end round button
-        continueScreen.endRoundButton.addActionListener(e -> {
-            cl.show(panelContent, "4");
-        });
-
         //end screen quit game button
         endScreen.quitGameButton.addActionListener(e -> {
             System.exit(0);
@@ -123,14 +126,17 @@ public class GUI extends JFrame {
 
         //end screen play again button
         endScreen.newGameButton.addActionListener(e -> {
+            gamesWon = 0;
+            mainScreen.UpdateHangman(0);
             cl.show(panelContent, "2");
-            mainScreen.bottomPanel.remove(mainScreen.endRoundButton);
+            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
+            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
             for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
                 mainScreen.keyboardButtons[i2].setVisible(true);
                 mainScreen.keyboardButtons[i2].setEnabled(true);
             }
             for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
-                mainScreen.blankButtons[i2].setEnabled(true);
+                mainScreen.blankButtons[i2].setVisible(true);
             }
 
 
@@ -157,6 +163,7 @@ public class GUI extends JFrame {
         playerGuesses = new char[wordLength];
         for (int i = 0; i < wordLength; i++) {
             if (splitWord[i] == '\'') playerGuesses[i] = '\'';
+            else if (splitWord[i] == ',') playerGuesses[i] = ',';
             else playerGuesses[i] = ' ';
         }
         mainScreen.DrawWordDisplay(playerGuesses);
@@ -174,10 +181,19 @@ public class GUI extends JFrame {
                 playerGuesses = WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses); //Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
                 correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
+
+                //What happens when word is correctly guessed:
                 if (correctlyGuessed) {
                     gamesWon++;
-                    continueScreen.DisplayGamesWon();
-                    cl.show(panelContent, "3");
+                    for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
+                        mainScreen.keyboardButtons[i2].setVisible(false);
+                    }
+                    for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
+                        mainScreen.blankButtons[i2].setVisible(false);
+                    }
+                    mainScreen.UpdateHangman(-1);
+                    mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
+                    mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
                 }
             }
             else{

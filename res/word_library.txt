@@ -36,7 +36,7 @@ Chile
 China
 Colombia
 Comoros
-Democratic Republic of the Congo
+Congo
 Costa Rica
 Croatia
 Cuba
@@ -159,7 +159,7 @@ South Africa
 Spain
 Sri Lanka
 Sudan
-Sudan, South
+South Sudan
 Suriname
 Sweden
 Switzerland

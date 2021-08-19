@@ -18,9 +18,10 @@ public class MainScreen extends JPanel {
     private String playerGuesses;
 
     JButton[] keyboardButtons = new JButton[26];
-    JButton endRoundButton = new JButton("Continue");
+    JButton quitRoundButton = new JButton("End Round");
     JPanel bottomPanel = new JPanel();
     JButton[] blankButtons = new JButton[3];
+    JButton nextRoundButton = new JButton("Next Round");
 
     MainScreen(GUI parent) {
 
@@ -56,9 +57,12 @@ public class MainScreen extends JPanel {
             bottomPanel.add(keyboardButtons[i]);
 
         }
-        endRoundButton.setPreferredSize(new Dimension(300, 100));
-        endRoundButton.setFocusable(false);
-        endRoundButton.setVisible(true);
+        quitRoundButton.setPreferredSize(new Dimension(300, 100));
+        quitRoundButton.setFocusable(false);
+        quitRoundButton.setVisible(true);
+        nextRoundButton.setPreferredSize(new Dimension(300, 100));
+        nextRoundButton.setFocusable(false);
+        nextRoundButton.setVisible(true);
         UpdateHangman(incorrectGuesses);
 
     }
@@ -78,6 +82,14 @@ public class MainScreen extends JPanel {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
         switch (incorrectGuesses) {
+            case -1 -> {//clears hangman
+                g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
+                FontMetrics metrics = getFontMetrics(g.getFont());
+                g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 200);
+                g2D.setBackground(Color.DARK_GRAY);
+
+                g2D.setColor(new Color(0, 100, 0));
+            }
             case 0 -> g2D.drawImage(hangman1.getImage(), 200, -100, null);
             case 1 -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
