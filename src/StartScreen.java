@@ -1,17 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
+import java.util.Objects;
 
 public class StartScreen extends JPanel{
 
-    JButton startButton = new JButton();
+    JButton startSinglePlayerButton = new JButton("Singleplayer");
+    JButton startMultiPlayerButton = new JButton("Multiplayer");
 
-    StartScreen(GUI parent) { //Start screen panel GUI
+    StartScreen() { //Start screen panel GUI
         this.setLayout(new BorderLayout());
 
-        ImageIcon startScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
+        ImageIcon startScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
 
         JLabel label = new JLabel();
         label.setIcon(startScreenImage);
@@ -27,11 +26,15 @@ public class StartScreen extends JPanel{
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(1000, 150));
 
-        startButton.setText("Start");
-        startButton.setFocusable(false);
-        startButton.setPreferredSize(new Dimension(300, 100));
-        bottomPanel.add(startButton);
-        startButton.setVerticalAlignment(JButton.CENTER);
+        startSinglePlayerButton.setFocusable(false);
+        startSinglePlayerButton.setPreferredSize(new Dimension(300, 100));
+        bottomPanel.add(startSinglePlayerButton);
+        startSinglePlayerButton.setVerticalAlignment(JButton.CENTER);
+
+        startMultiPlayerButton.setFocusable(false);
+        startMultiPlayerButton.setPreferredSize(new Dimension(300, 100));
+        bottomPanel.add(startMultiPlayerButton);
+        startMultiPlayerButton.setVerticalAlignment(JButton.CENTER);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
         this.add(label);

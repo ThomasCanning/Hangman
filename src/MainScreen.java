@@ -21,6 +21,7 @@ public class MainScreen extends JPanel {
 
     JButton[] keyboardButtons = new JButton[26];
     JButton quitRoundButton = new JButton("End Round");
+    JButton nextPlayerButton = new JButton("Next Turn");
     JPanel bottomPanel = new JPanel();
     JButton[] blankButtons = new JButton[3];
     JButton nextRoundButton = new JButton("Next Round");
@@ -67,6 +68,9 @@ public class MainScreen extends JPanel {
         nextRoundButton.setVisible(true);
         UpdateHangman(incorrectGuesses);
 
+        //multiplayer:
+        nextPlayerButton.setPreferredSize(new Dimension(300, 100));
+
     }
 
     public void SetIncorrectGuesses(int newIncorrectGuesses) {this.incorrectGuesses = newIncorrectGuesses;}
@@ -80,23 +84,35 @@ public class MainScreen extends JPanel {
 
     }
 
+    public void SetNextPlayerButton (String player) {
+        nextPlayerButton.setText(player + "'s Turn");
+    }
+
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
         switch (incorrectGuesses) {
             case -1 -> {//clears hangman
-                g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
-                FontMetrics metrics = getFontMetrics(g.getFont());
-                g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 350);
-                try {
-                    if (GUI.gamesWon > GUI.ReadHighscoreFile()) g2D.setColor(new Color(0, 100, 0));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (GUI.gameMode=='s') {
+                    g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
+                    FontMetrics metrics = getFontMetrics(g.getFont());
+                    g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 350);
+                    try {
+                        if (GUI.gamesWon > GUI.ReadHighscoreFile()) g2D.setColor(new Color(0, 100, 0));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score: " + GUI.GetHighScore())) / 2), 150);
+
+                    g2D.setBackground(Color.DARK_GRAY);
                 }
-                g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score: " + GUI.GetHighScore())) / 2), 150);
-
-                g2D.setBackground(Color.DARK_GRAY);
-
+                else {
+                    g2D.drawImage(hangman3.getImage(), 200, 0, null);
+                    g2D.drawImage(hangman4.getImage(), 200, 0, null);
+                    g2D.drawImage(hangman5.getImage(), 200, 0, null);
+                    g2D.drawImage(hangman6.getImage(), 200, 0, null);
+                    g2D.drawImage(hangman7.getImage(), 200, 0, null);
+                }
                 g2D.setColor(new Color(0, 100, 0));
             }
             case 0 -> g2D.drawImage(hangman1.getImage(), 200, -100, null);

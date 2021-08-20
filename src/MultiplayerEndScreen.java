@@ -3,13 +3,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class EndScreen extends JPanel {
+public class MultiplayerEndScreen extends JPanel {
 
     JButton newGameButton = new JButton("Play Again");
     JButton quitGameButton = new JButton("Quit Game");
+    JButton singlePlayerButton = new JButton("SinglePlayer");
     ImageIcon endScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
 
-    public EndScreen() {
+    public MultiplayerEndScreen() {
         this.setLayout(new BorderLayout());
 
         JPanel bottomPanel = new JPanel();
@@ -17,13 +18,15 @@ public class EndScreen extends JPanel {
 
         newGameButton.setFocusable(false);
         newGameButton.setPreferredSize(new Dimension(300, 100));
-        bottomPanel.add(newGameButton);
-        newGameButton.setVerticalAlignment(JButton.CENTER);
+        bottomPanel.add(newGameButton, BorderLayout.WEST);
 
         quitGameButton.setFocusable(false);
         quitGameButton.setPreferredSize(new Dimension(300, 100));
-        bottomPanel.add(quitGameButton);
-        quitGameButton.setVerticalAlignment(JButton.CENTER);
+        bottomPanel.add(quitGameButton, BorderLayout.CENTER);
+
+        singlePlayerButton.setFocusable(false);
+        singlePlayerButton.setPreferredSize(new Dimension(300,100));
+        bottomPanel.add(singlePlayerButton, BorderLayout.EAST);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -33,14 +36,12 @@ public class EndScreen extends JPanel {
         g2D.drawImage(endScreenImage.getImage(), 200, 300, null);
         g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g2D.drawString("Final Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Final Score: " + GUI.GetGamesWon())) / 2), 350);
-        try {
-            if (GUI.gamesWon > GUI.ReadHighscoreFile()) g2D.setColor(new Color(0, 100, 0));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (GUI.winner.equals("Draw")) {
+            g2D.drawString("Both Guessed Correctly", ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Both Guessed Correctly")) / 2), 300);
         }
-        g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score " + GUI.GetHighScore())) / 2), 150);
-        g2D.setBackground(Color.DARK_GRAY);
+        else{
+            g2D.drawString(GUI.winner + " is the winner", ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(GUI.winner + " is the winner")) / 2), 350);
+        }
     }
 }
 

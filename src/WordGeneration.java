@@ -63,13 +63,13 @@ public class WordGeneration {  //This class has a method that can be called whic
 
     }
 
-    public static char[] SplitWord(String randomWord) {  //Turns Random word string into an array of characters that is easier to work with
-        return ConvertWord(randomWord).toCharArray();
+    public static char[] SplitWord(String word) {  //Turns Random word string into an array of characters that is easier to work with
+        return ConvertWord(word).toCharArray();
     }
 
-    private static String ConvertWord(String randomWord) {
+    private static String ConvertWord(String word) {
         String upperWord;
-        upperWord = randomWord.toUpperCase();
+        upperWord = word.toUpperCase();
         return upperWord;
     }
 
