@@ -15,14 +15,13 @@ public class GUI extends JFrame {
     public static final int INCORRECT_GUESSES_LIMIT = 6;
     public static final int MAX_WORD_LENGTH = 30;
 
-    private static int gamesWon = 0;
+    public static int gamesWon = 0;
     private static int highScore;
     private char playerGuess;
     public static boolean correctlyGuessed;
     private static char[] splitWord;
     private static char[] playerGuesses;
     private static int incorrectGuesses = 0;
-    public static boolean gainedNewHighscore;
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen();
@@ -205,7 +204,6 @@ public class GUI extends JFrame {
                     //What happens if new highscore
                     if (gamesWon > ReadHighscoreFile()) {
                         highScore = gamesWon;
-                        gainedNewHighscore = true;
                         WriteToHighscoreFile(highScore);
                     }
                 }

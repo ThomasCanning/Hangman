@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Objects;
 
 public class MainScreen extends JPanel {
@@ -87,7 +88,11 @@ public class MainScreen extends JPanel {
                 g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
                 FontMetrics metrics = getFontMetrics(g.getFont());
                 g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 350);
-                if (GUI.gainedNewHighscore) g2D.setColor(new Color(0, 100, 0));
+                try {
+                    if (GUI.gamesWon > GUI.ReadHighscoreFile()) g2D.setColor(new Color(0, 100, 0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score: " + GUI.GetHighScore())) / 2), 150);
 
                 g2D.setBackground(Color.DARK_GRAY);
