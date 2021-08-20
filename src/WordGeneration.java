@@ -35,14 +35,10 @@ public class WordGeneration {  //This class has a method that can be called whic
     //Used to check if word has come up recently
     private static boolean CheckIfPastWord(String generatedWord, String[] pastWords) {
         for (int i = 0; i < pastWords.length; i++) {
-            System.out.println("gen word: " + generatedWord);
-            System.out.println("past word: " + pastWords[i]);
             if ((generatedWord.equals(pastWords[i])) && (pastWords[i] != null)) {
-                System.out.println("false");
                 return (false);
             }
         }
-        System.out.println("true");
         return true; //returns true if the word is not a past word
     }
 
@@ -58,7 +54,6 @@ public class WordGeneration {  //This class has a method that can be called whic
         while (true) {
             generatedWord = words.get(WordGeneration.Random(words.size()-1));
             if ((generatedWord.length()<=GUI.MAX_WORD_LENGTH)&&(CheckIfPastWord(generatedWord, pastWords))){
-                System.out.println("TEST");
                 pastWords[pastWordsIndex] = generatedWord;
                 if (pastWordsIndex<pastWords.length-1) pastWordsIndex++;
                 else pastWordsIndex = 0;
