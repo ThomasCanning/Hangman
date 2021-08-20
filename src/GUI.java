@@ -22,6 +22,7 @@ public class GUI extends JFrame {
     private static char[] splitWord;
     private static char[] playerGuesses;
     private static int incorrectGuesses = 0;
+    public static boolean gainedNewHighscore = true;
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen();
@@ -205,6 +206,7 @@ public class GUI extends JFrame {
                     //What happens if new highscore
                     if (gamesWon > ReadHighscoreFile()) {
                         highScore = gamesWon;
+                        gainedNewHighscore = true;
                         WriteToHighscoreFile(highScore);
                     }
                 }

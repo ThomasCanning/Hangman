@@ -6,15 +6,10 @@ public class EndScreen extends JPanel {
 
     JButton newGameButton = new JButton("Play Again");
     JButton quitGameButton = new JButton("Quit Game");
+    ImageIcon endScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
 
     public EndScreen() {
         this.setLayout(new BorderLayout());
-        ImageIcon endScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
-        JLabel label = new JLabel();
-        label.setIcon(endScreenImage);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setVerticalAlignment(JLabel.CENTER);
-        label.setFont(new Font("Comic Sans", Font.BOLD, 150));
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(1000, 150));
@@ -30,12 +25,11 @@ public class EndScreen extends JPanel {
         quitGameButton.setVerticalAlignment(JButton.CENTER);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
-        this.add(label);
     }
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
-
+        g2D.drawImage(endScreenImage.getImage(), 200, 300, null);
         g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
         FontMetrics metrics = getFontMetrics(g.getFont());
         g2D.drawString("Final Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Final Score: " + GUI.GetGamesWon())) / 2), 150);
