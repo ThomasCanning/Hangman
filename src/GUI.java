@@ -36,6 +36,7 @@ public class GUI extends JFrame {
 
         highScore = ReadHighscoreFile();
         System.out.println(highScore);
+        System.out.println(highScore);
 
         //Sets up card layout that allows different panels to be swapped (game screens)
         panelContent.setLayout(cl);
