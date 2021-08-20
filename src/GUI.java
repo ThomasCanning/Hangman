@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.io.File;
+import java.util.Scanner;
 
 public class GUI extends JFrame {
 
@@ -14,6 +15,7 @@ public class GUI extends JFrame {
     public static final int MAX_WORD_LENGTH = 30;
 
     private static int gamesWon = 0;
+    private static int highScore;
     private char playerGuess;
     public static boolean correctlyGuessed;
     private static char[] splitWord;
@@ -31,6 +33,9 @@ public class GUI extends JFrame {
     ImageIcon taskbarImage = new ImageIcon(getClass().getClassLoader().getResource("TaskBarImage.png"));
 
     public GUI() throws IOException {
+
+        highScore = ReadHighscoreFile();
+        System.out.println(highScore);
 
         //Sets up card layout that allows different panels to be swapped (game screens)
         panelContent.setLayout(cl);
@@ -73,12 +78,16 @@ public class GUI extends JFrame {
                 for (int i1 = 0; i1 < mainScreen.keyboardButtons.length; i1++) {
                     if (mainScreen.keyboardButtons[i1] == e.getSource()) {
                         mainScreen.keyboardButtons[i1].setEnabled(false);
-                        HangmanGuess();
-                        if(incorrectGuesses == INCORRECT_GUESSES_LIMIT) {
+                        try {
+                            HangmanGuess();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                        if (incorrectGuesses == INCORRECT_GUESSES_LIMIT) {
                             for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
                                 mainScreen.keyboardButtons[i2].setVisible(false);
                             }
-                            for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
+                            for (int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
                                 mainScreen.blankButtons[i2].setVisible(false);
                             }
 
@@ -136,7 +145,7 @@ public class GUI extends JFrame {
                 mainScreen.keyboardButtons[i2].setVisible(true);
                 mainScreen.keyboardButtons[i2].setEnabled(true);
             }
-            for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
+            for (int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
                 mainScreen.blankButtons[i2].setVisible(true);
             }
 
@@ -151,6 +160,7 @@ public class GUI extends JFrame {
 
     public void HangmanRound() throws FileNotFoundException {
 
+        mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 320));
         incorrectGuesses = 0;
         correctlyGuessed = false;
         String randomWord = WordGeneration.Generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
@@ -170,7 +180,7 @@ public class GUI extends JFrame {
         mainScreen.DrawWordDisplay(playerGuesses);
     }
 
-    public void HangmanGuess() {
+    public void HangmanGuess() throws IOException {
 
         //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
 
@@ -189,26 +199,64 @@ public class GUI extends JFrame {
                     for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
                         mainScreen.keyboardButtons[i2].setVisible(false);
                     }
-                    for(int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
+                    for (int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
                         mainScreen.blankButtons[i2].setVisible(false);
                     }
                     mainScreen.UpdateHangman(-1);
                     mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
                     mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
+                    mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 270));
+                    //What happens if new highscore
+                    if (gamesWon > ReadHighscoreFile()) {
+                        highScore = gamesWon;
+                        WriteToHighscoreFile(highScore);
+                    }
                 }
-            }
-            else{
+            } else {
                 incorrectGuesses++;
                 mainScreen.UpdateHangman(incorrectGuesses);
             }
-        }
-        else {
+        } else {
             mainScreen.UpdateHangman(incorrectGuesses);
         }
 
     }
+
     public static String GetGamesWon() {
         return new String(String.valueOf(gamesWon));
     }
+
+    public static String GetHighScore() {
+        return new String(String.valueOf(highScore));
+    }
+
+    private static void WriteToHighscoreFile(int highScore) {
+        try {
+            FileWriter highscoreWriter = new FileWriter("res/highscores.txt");
+            highscoreWriter.write(highScore + "");
+            highscoreWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public static int ReadHighscoreFile() throws IOException {
+        int data = 0;
+        try {
+            File highscoreFile = new File("res/highscores.txt");
+            highscoreFile.createNewFile();
+            Scanner highscoreReader = new Scanner(highscoreFile);
+            if(highscoreReader.hasNextLine()) data = Integer.parseInt(highscoreReader.nextLine());
+            System.out.println(data);
+            highscoreReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            data = highScore;
+        }
+        return data;
+    }
 }
+
 
