@@ -11,6 +11,7 @@ public class GUI extends JFrame {
     public static final int SCREEN_WIDTH = 1920;
     public static final int SCREEN_HEIGHT = 1080;
     public static final int INCORRECT_GUESSES_LIMIT = 6;
+    public static final int MAX_WORD_LENGTH = 30;
 
     private static int gamesWon = 0;
     private char playerGuess;
@@ -155,7 +156,7 @@ public class GUI extends JFrame {
         String randomWord = WordGeneration.Generate();  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
         splitWord = WordGeneration.SplitWord(randomWord);  //Runs method that split word into an array of characters
         mainScreen.SetWord(randomWord);
-        System.out.println(randomWord);
+        System.out.println("Word is: " + randomWord);
 
         int wordLength = splitWord.length;  //Stores length of word as a variable
 
