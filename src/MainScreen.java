@@ -87,6 +87,7 @@ public class MainScreen extends JPanel {
                 g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
                 FontMetrics metrics = getFontMetrics(g.getFont());
                 g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 350);
+                if (GUI.gainedNewHighscore) g2D.setColor(new Color(0, 100, 0));
                 g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score: " + GUI.GetHighScore())) / 2), 150);
 
                 g2D.setBackground(Color.DARK_GRAY);

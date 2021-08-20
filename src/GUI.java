@@ -22,7 +22,7 @@ public class GUI extends JFrame {
     private static char[] splitWord;
     private static char[] playerGuesses;
     private static int incorrectGuesses = 0;
-    public static boolean gainedNewHighscore = true;
+    public static boolean gainedNewHighscore;
 
     StartScreen startScreen = new StartScreen(this);
     MainScreen mainScreen = new MainScreen();
@@ -127,7 +127,6 @@ public class GUI extends JFrame {
                 fileNotFoundException.printStackTrace();
             }
         });
-
         //end screen quit game button
         endScreen.quitGameButton.addActionListener(e -> System.exit(0));
 
