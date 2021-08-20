@@ -1,14 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class EndScreen extends JPanel {
 
     JButton newGameButton = new JButton("Play Again");
     JButton quitGameButton = new JButton("Quit Game");
 
-    public EndScreen (GUI parent) {
+    public EndScreen() {
         this.setLayout(new BorderLayout());
-        ImageIcon endScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
+        ImageIcon endScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
         JLabel label = new JLabel();
         label.setIcon(endScreenImage);
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -40,9 +41,6 @@ public class EndScreen extends JPanel {
         g2D.drawString("Final Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Final Score: " + GUI.GetGamesWon())) / 2), 150);
         g2D.drawString("High Score: " + GUI.GetHighScore(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("High Score " + GUI.GetHighScore())) / 2), 350);
         g2D.setBackground(Color.DARK_GRAY);
-    }
-    public void DisplayGamesWon() {
-        repaint();
     }
 }
 

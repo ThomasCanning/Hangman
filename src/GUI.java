@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.io.File;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class GUI extends JFrame {
@@ -23,20 +24,19 @@ public class GUI extends JFrame {
     private static int incorrectGuesses = 0;
 
     StartScreen startScreen = new StartScreen(this);
-    MainScreen mainScreen = new MainScreen(this);
-    EndScreen endScreen = new EndScreen(this);
+    MainScreen mainScreen = new MainScreen();
+    EndScreen endScreen = new EndScreen();
 
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
+    JPanel centerPanel = new JPanel();
     CardLayout cl = new CardLayout();   //creates a card layout
 
     //creates GUI elements
-    ImageIcon taskbarImage = new ImageIcon(getClass().getClassLoader().getResource("TaskBarImage.png"));
+    ImageIcon taskbarImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("TaskBarImage.png")));
 
     public GUI() throws IOException {
 
         highScore = ReadHighscoreFile();
-        System.out.println(highScore);
-        System.out.println(highScore);
 
         //Sets up card layout that allows different panels to be swapped (game screens)
         panelContent.setLayout(cl);
@@ -51,7 +51,7 @@ public class GUI extends JFrame {
         this.getContentPane().setBackground(new Color(237, 244, 237)); //Changes background color
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.add(panelContent);
+        this.add(panelContent, BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Sets what happens when X is pressed (closes application)
         this.setResizable(false);
         this.pack();
@@ -101,9 +101,7 @@ public class GUI extends JFrame {
 
 
         //main screen quit button
-        mainScreen.quitRoundButton.addActionListener(e -> {
-            cl.show(panelContent, "3");
-        });
+        mainScreen.quitRoundButton.addActionListener(e -> cl.show(panelContent, "3"));
 
         //main screen next round button
         mainScreen.nextRoundButton.addActionListener(e -> {
@@ -118,7 +116,6 @@ public class GUI extends JFrame {
 
             try {
                 cl.show(panelContent, "2");
-                System.out.println("new round");
                 //Resets keyboard
                 for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
                     mainScreen.keyboardButtons[i].setEnabled(true);
@@ -131,9 +128,7 @@ public class GUI extends JFrame {
         });
 
         //end screen quit game button
-        endScreen.quitGameButton.addActionListener(e -> {
-            System.exit(0);
-        });
+        endScreen.quitGameButton.addActionListener(e -> System.exit(0));
 
         //end screen play again button
         endScreen.newGameButton.addActionListener(e -> {
@@ -190,7 +185,7 @@ public class GUI extends JFrame {
             playerGuess = Character.toUpperCase(playerGuess);  //Converting user input to upper case
 
             if (WordGeneration.Check(splitWord, playerGuess)) {//checks if player guess was correct
-                playerGuesses = WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses); //Updates playerGuesses array with new guess
+                WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses);//Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
                 correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
 
@@ -224,11 +219,11 @@ public class GUI extends JFrame {
     }
 
     public static String GetGamesWon() {
-        return new String(String.valueOf(gamesWon));
+        return String.valueOf(gamesWon);
     }
 
     public static String GetHighScore() {
-        return new String(String.valueOf(highScore));
+        return String.valueOf(highScore);
     }
 
     private static void WriteToHighscoreFile(int highScore) {
@@ -236,9 +231,7 @@ public class GUI extends JFrame {
             FileWriter highscoreWriter = new FileWriter("res/highscores.txt");
             highscoreWriter.write(highScore + "");
             highscoreWriter.close();
-            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
@@ -249,10 +242,8 @@ public class GUI extends JFrame {
             highscoreFile.createNewFile();
             Scanner highscoreReader = new Scanner(highscoreFile);
             if(highscoreReader.hasNextLine()) data = Integer.parseInt(highscoreReader.nextLine());
-            System.out.println(data);
             highscoreReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
             data = highScore;
         }

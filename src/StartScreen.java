@@ -36,5 +36,4 @@ public class StartScreen extends JPanel{
         this.add(bottomPanel, BorderLayout.SOUTH);
         this.add(label);
     }
-
 }

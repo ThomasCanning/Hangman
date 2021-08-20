@@ -1,14 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class MainScreen extends JPanel {
-    final ImageIcon hangman1 = new ImageIcon(getClass().getClassLoader().getResource("Hangman1.png"));
-    final ImageIcon hangman2 = new ImageIcon(getClass().getClassLoader().getResource("Hangman2.png"));
-    final ImageIcon hangman3 = new ImageIcon(getClass().getClassLoader().getResource("Hangman3.png"));
-    final ImageIcon hangman4 = new ImageIcon(getClass().getClassLoader().getResource("Hangman4.png"));
-    final ImageIcon hangman5 = new ImageIcon(getClass().getClassLoader().getResource("Hangman5.png"));
-    final ImageIcon hangman6 = new ImageIcon(getClass().getClassLoader().getResource("Hangman6.png"));
-    final ImageIcon hangman7 = new ImageIcon(getClass().getClassLoader().getResource("Hangman7.png"));
+    final ImageIcon hangman1 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman1.png")));
+    final ImageIcon hangman2 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman2.png")));
+    final ImageIcon hangman3 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman3.png")));
+    final ImageIcon hangman4 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman4.png")));
+    final ImageIcon hangman5 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman5.png")));
+    final ImageIcon hangman6 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman6.png")));
+    final ImageIcon hangman7 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman7.png")));
 
     final char[] QWERTY = {'q','w','e','r', 't','y','u','i','o','p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','z','x','c','v','b','n','m'};
 
@@ -23,7 +24,7 @@ public class MainScreen extends JPanel {
     JButton[] blankButtons = new JButton[3];
     JButton nextRoundButton = new JButton("Next Round");
 
-    MainScreen(GUI parent) {
+    MainScreen() {
 
         for(int i = 0; i < 3; i++) {
             blankButtons[i] = new JButton();
@@ -37,7 +38,7 @@ public class MainScreen extends JPanel {
         bottomPanel.setPreferredSize(new Dimension(1000, 320));
         bottomPanel.setLayout((new FlowLayout()));
         this.add(bottomPanel, BorderLayout.SOUTH);
-        int i = 0;
+        int i;
         for (i = 0; i <= 25; i++) {
             if(QWERTY[i] == 'a') {
                 blankButtons[0].setPreferredSize(new Dimension(20, 90));
@@ -123,15 +124,6 @@ public class MainScreen extends JPanel {
                 g2D.drawImage(hangman5.getImage(), 200, -100, null);
                 g2D.drawImage(hangman6.getImage(), 200, -100, null);
             }
-            case 6 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                g2D.drawImage(hangman4.getImage(), 200, -100, null);
-                g2D.drawImage(hangman5.getImage(), 200, -100, null);
-                g2D.drawImage(hangman6.getImage(), 200, -100, null);
-                g2D.drawImage(hangman7.getImage(), 200, -100, null);
-            }
             default -> {
                 g2D.drawImage(hangman1.getImage(), 200, -100, null);
                 g2D.drawImage(hangman2.getImage(), 200, -100, null);
@@ -168,26 +160,20 @@ public class MainScreen extends JPanel {
 
             for (int i = 0; i < word.length(); i++) {
                 char character = word.charAt(i);
-                if (character == ' ') {
-                    spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
-                } else {
+                if (character != ' ') {
                     g.setColor(Color.DARK_GRAY);
-                    g.fillRect((((GUI.SCREEN_WIDTH / 2) - ((metrics.stringWidth(word))+4) / 2) + 6) + spaceAlongLine, 620, metrics.charWidth(character) - 6, 20);
-                    spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
+                    g.fillRect((((GUI.SCREEN_WIDTH / 2) - ((metrics.stringWidth(word)) + 4) / 2) + 6) + spaceAlongLine, 620, metrics.charWidth(character) - 6, 20);
                 }
+                spaceAlongLine = spaceAlongLine + metrics.charWidth(character);
             }
             if (incorrectGuesses == GUI.INCORRECT_GUESSES_LIMIT) {
                 //What happens when fail
                 g2D.setColor(Color.RED);
                 g2D.drawString(word, ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth(word)) / 2), 600);
-
-                //remove keyboard and replace with continue button
-                for (int i = 0; i < this.keyboardButtons.length; i++) {
-
-                }
             }
         }
     }
+
 
     public void UpdateHangman(int incorrectGuesses) {
         SetIncorrectGuesses(incorrectGuesses);

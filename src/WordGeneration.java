@@ -16,7 +16,7 @@ public class WordGeneration {  //This class has a method that can be called whic
         }
     }
 
-    private static String[] pastWords = new String[pastWordsLength];
+    private static final String[] pastWords = new String[pastWordsLength];
     private static int pastWordsIndex = 0;
 
     //Reads words from word_library text file
@@ -32,9 +32,9 @@ public class WordGeneration {  //This class has a method that can be called whic
     }
 
     //Used to check if word has come up recently
-    private static boolean CheckIfPastWord(String generatedWord, String[] pastWords) {
-        for (int i = 0; i < pastWords.length; i++) {
-            if ((generatedWord.equals(pastWords[i])) && (pastWords[i] != null)) {
+    private static boolean CheckIfPastWord(String generatedWord) {
+        for (int i = 0; i < WordGeneration.pastWords.length; i++) {
+            if ((generatedWord.equals(WordGeneration.pastWords[i])) && (WordGeneration.pastWords[i] != null)) {
                 return (false);
             }
         }
@@ -52,7 +52,7 @@ public class WordGeneration {  //This class has a method that can be called whic
         String generatedWord;
         while (true) {
             generatedWord = words.get(WordGeneration.Random(words.size()-1));
-            if ((generatedWord.length()<=GUI.MAX_WORD_LENGTH)&&(CheckIfPastWord(generatedWord, pastWords))){
+            if ((generatedWord.length()<=GUI.MAX_WORD_LENGTH)&&(CheckIfPastWord(generatedWord))){
                 pastWords[pastWordsIndex] = generatedWord;
                 if (pastWordsIndex<pastWords.length-1) pastWordsIndex++;
                 else pastWordsIndex = 0;
@@ -84,12 +84,11 @@ public class WordGeneration {  //This class has a method that can be called whic
         return test;  //Returns boolean of whether users guess was correct or not
     }
 
-    public static char[] CorrectGuess(char userGuess, char[] splitWord, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
+    public static void CorrectGuess(char userGuess, char[] splitWord, char[] playerGuesses) {  //This method takes the current user guess and array of previous correct guesses
         for (int i = 0; i < splitWord.length; i++) {
             if (userGuess == splitWord[i]) { //If userGuess is the same as a letter in the word then the _ is changed to that letter
                 playerGuesses[i] = userGuess;  //Sets the _ to that letter
             }
         }
-        return playerGuesses;
     }
 }
