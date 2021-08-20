@@ -8,9 +8,9 @@ public class EndScreen extends JPanel {
 
     public EndScreen (GUI parent) {
         this.setLayout(new BorderLayout());
-        ImageIcon continueScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
+        ImageIcon endScreenImage = new ImageIcon(getClass().getClassLoader().getResource("StartScreenImage.png"));
         JLabel label = new JLabel();
-        label.setIcon(continueScreenImage);
+        label.setIcon(endScreenImage);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setFont(new Font("Comic Sans", Font.BOLD, 150));
