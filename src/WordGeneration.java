@@ -11,7 +11,6 @@ public class WordGeneration {  //This class has a method that can be called whic
     static {
         try {
             pastWordsLength = (int) ((ReadWordList().toArray().length)*0.75);
-            System.out.println(pastWordsLength);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,9 +57,6 @@ public class WordGeneration {  //This class has a method that can be called whic
                 if (pastWordsIndex<pastWords.length-1) pastWordsIndex++;
                 else pastWordsIndex = 0;
                 pastWords[pastWordsIndex] = null;
-                for (String word : pastWords) {
-                    System.out.println(word);
-                }
                 return generatedWord;
             }
         }
