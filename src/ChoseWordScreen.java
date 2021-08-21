@@ -44,6 +44,11 @@ public class ChoseWordScreen extends JPanel {
         GUI.incorrectGuesses = 0;
     }
 
+    public void ResetEnterWord() {
+        this.requestFocusInWindow();
+        enterWord.setEchoChar((char)0);
+        enterWord.setText("Enter Word:");
+    }
 
     protected void paintComponent(Graphics gp) {
         super.paintComponent(gp);

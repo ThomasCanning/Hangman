@@ -132,7 +132,11 @@ public class GUI extends JFrame {
 
 
         //main screen quit button
-        mainScreen.quitRoundButton.addActionListener(e -> cl.show(panelContent, "3"));
+        mainScreen.quitRoundButton.addActionListener(e -> {
+            cl.show(panelContent, "3");
+            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
+            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
+        });
 
         //main screen next round button
         mainScreen.nextRoundButton.addActionListener(e -> {
@@ -165,8 +169,6 @@ public class GUI extends JFrame {
             gamesWon = 0;
             mainScreen.UpdateHangman(0);
             cl.show(panelContent, "2");
-            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
-            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
             ShowKeyboard();
 
             try {
@@ -178,18 +180,10 @@ public class GUI extends JFrame {
 
         //End screen multiplayer button that changes gamemode
         singleplayerEndScreen.multiplayerButton.addActionListener(e -> {
-            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
-            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
-            gameMode = 'm';
-            playerTurn = 1;
-            player = "Player 1";
-            winner = null;
-            player1Correct = false;
-            player2Correct = false;
+            chooseWordScreen.ResetScreen();
             cl.show(panelContent, "4");
             mainScreen.UpdateHangman(0);
             ShowKeyboard();
-            incorrectGuesses = 0;
         });
 
         //Multiplayer
@@ -232,9 +226,7 @@ public class GUI extends JFrame {
             try {
                 if (word.isEmpty() || !WordGeneration.CheckValidWord(word)) {
                     //ensures valid word is entered so makes user enter another word
-                    chooseWordScreen.requestFocusInWindow();
-                    chooseWordScreen.enterWord.setEchoChar((char)0);
-                    chooseWordScreen.enterWord.setText("Enter Valid Word:");
+                    chooseWordScreen.ResetEnterWord();
                 }
 
                 else {
@@ -264,8 +256,6 @@ public class GUI extends JFrame {
         });
         mainScreen.nextPlayerButton.addActionListener(e -> {
             mainScreen.nextPlayerButton.setVisible(false);
-            mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
-            mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
             for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
                 mainScreen.keyboardButtons[i].setVisible(true);
             }
@@ -299,6 +289,7 @@ public class GUI extends JFrame {
         multiplayerEndScreen.newGameButton.addActionListener(e -> {
             cl.show(panelContent, "4");
             mainScreen.UpdateHangman(0);
+            chooseWordScreen.ResetScreen();
             ShowKeyboard();
         });
 
@@ -345,6 +336,8 @@ public class GUI extends JFrame {
                 if (correctlyGuessed) {
                     mainScreen.UpdateHangman(-1);
                     HideKeyboard();
+
+                    //What happens in Singleplayer if correct
                     if (gameMode == 's') {
                         gamesWon++;
                         mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
@@ -356,17 +349,20 @@ public class GUI extends JFrame {
                             WriteToHighscoreFile(highScore);
                         }
                     }
+
+                    //What happens in multiplayer when correct
                     else if (gameMode == 'm') {
                         if (playerTurn == 1) {
+                            System.out.println("player1 turn");
+                            chooseWordScreen.ResetEnterWord();
                             player2Correct = true;
                             player = "Player 2";
                             playerTurn = 2; }
                         else if (playerTurn == 2) {
+                            chooseWordScreen.ResetEnterWord();
                             player1Correct = true;
                             player = "Player 1";
                             playerTurn = 1;}
-                        System.out.println(player1Correct);
-                        System.out.println(player2Correct);
                         //player 1 wins
                         if(player1Correct && !player2Correct) {
                             winner = "Player 1";
