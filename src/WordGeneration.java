@@ -91,4 +91,16 @@ public class WordGeneration {  //This class has a method that can be called whic
             }
         }
     }
+    //multiplayer
+    public static Boolean CheckValidWord(String word) throws FileNotFoundException {
+        Boolean valid;
+        File file = new File("res/validWords.txt");  //Reading file with words in
+        Scanner scan = new Scanner(file);
+        List<String> words = new ArrayList<>();
+        for (int i = 0; scan.hasNextLine(); i++) {
+            if(scan.nextLine().toLowerCase().equals(word.toLowerCase())) {valid = true; return valid;}
+        }
+        valid=false;
+        return valid;
+    }
 }

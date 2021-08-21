@@ -225,12 +225,14 @@ public class GUI extends JFrame {
             @Override
             public void focusGained(FocusEvent e) {
                 chooseWordScreen.enterWord.setText("");
+                chooseWordScreen.enterWord.setEchoChar('*');
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if(chooseWordScreen.enterWord.equals("")) {
                     chooseWordScreen.enterWord.setText("Enter Word:");
+                    chooseWordScreen.enterWord.setEchoChar((char)0);
                 }
             }
         });
@@ -251,31 +253,37 @@ public class GUI extends JFrame {
         chooseWordScreen.submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (chooseWordScreen.enterWord.getText().isEmpty()) {
-                    chooseWordScreen.requestFocusInWindow();
-                    chooseWordScreen.enterWord.setText("Enter Word:");
-                }
-                else {
-                    word = chooseWordScreen.enterWord.getText();
-                    splitWord = WordGeneration.SplitWord(word);  //Runs method that split word into an array of characters
-                    mainScreen.SetWord(word);
-
-                    int wordLength = splitWord.length;  //Stores length of word as a variable
-
-                    //Sets up an array of underscores for each of the characters in the word, and leaves gaps for spaces
-                    playerGuesses = new char[wordLength];
-                    for (int i = 0; i < wordLength; i++) {
-                        if (splitWord[i] == '\'') playerGuesses[i] = '\'';
-                        else if (splitWord[i] == ',') playerGuesses[i] = ',';
-                        else playerGuesses[i] = ' ';
+                try {
+                    if (chooseWordScreen.enterWord.getText().isEmpty() || !WordGeneration.CheckValidWord(chooseWordScreen.enterWord.getText())) {
+                        chooseWordScreen.requestFocusInWindow();
+                        chooseWordScreen.enterWord.setEchoChar((char)0);
+                        chooseWordScreen.enterWord.setText("Enter Valid Word:");
                     }
-                    mainScreen.DrawWordDisplay(playerGuesses);
-                    try {
-                        HangmanRound();
-                    } catch (FileNotFoundException fileNotFoundException) {
-                        fileNotFoundException.printStackTrace();
+
+                    else {
+                        word = chooseWordScreen.enterWord.getText();
+                        splitWord = WordGeneration.SplitWord(word);  //Runs method that split word into an array of characters
+                        mainScreen.SetWord(word);
+
+                        int wordLength = splitWord.length;  //Stores length of word as a variable
+
+                        //Sets up an array of underscores for each of the characters in the word, and leaves gaps for spaces
+                        playerGuesses = new char[wordLength];
+                        for (int i = 0; i < wordLength; i++) {
+                            if (splitWord[i] == '\'') playerGuesses[i] = '\'';
+                            else if (splitWord[i] == ',') playerGuesses[i] = ',';
+                            else playerGuesses[i] = ' ';
+                        }
+                        mainScreen.DrawWordDisplay(playerGuesses);
+                        try {
+                            HangmanRound();
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                        cl.show(panelContent, "2");
                     }
-                    cl.show(panelContent, "2");
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
                 }
             }
         });

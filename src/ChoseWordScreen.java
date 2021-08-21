@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class ChoseWordScreen extends JPanel {
 
-    JTextField enterWord;
+    JPasswordField enterWord;
     JLabel label;
     JButton submit;
 
@@ -15,7 +15,8 @@ public class ChoseWordScreen extends JPanel {
 
         submit = new JButton("Submit");
 
-        enterWord = new JTextField("Enter Word:");
+        enterWord = new JPasswordField("Enter Word:");
+        enterWord.setEchoChar((char)0);
         enterWord.setFont(new Font("Comic Sans", Font.BOLD, 120));
         enterWord.setForeground(Color.BLACK);
         enterWord.setBounds(GUI.SCREEN_WIDTH / 2 - 600, GUI.SCREEN_HEIGHT - 350, 1200, 180);
