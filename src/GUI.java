@@ -69,6 +69,9 @@ public class GUI extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
+        //What happens when various buttons are pressed:-------------------
+
+        //Start Screen-----------
         //Defines what happens when Singleplayer button pressed
         startScreen.startSinglePlayerButton.addActionListener(e -> {
             gameMode = 's';
@@ -80,6 +83,7 @@ public class GUI extends JFrame {
             cl.show(panelContent, "2");
         });
 
+        //Main Screen-----------------
         //Defines what happens when keyboard is pressed
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].addActionListener(e -> {
@@ -100,7 +104,6 @@ public class GUI extends JFrame {
                 }
             });
         }
-
 
         //main screen quit button
         mainScreen.quitRoundButton.addActionListener(e -> {
@@ -124,10 +127,11 @@ public class GUI extends JFrame {
             }
         });
 
-        //end screen quit game button
+        //Single player end screen---------
+        //Single player end screen quit game button
         singleplayerEndScreen.quitGameButton.addActionListener(e -> System.exit(0));
 
-        //end screen play again button
+        //Single player end screen play again button
         singleplayerEndScreen.newGameButton.addActionListener(e -> {
             gamesWon = 0;
             mainScreen.UpdateHangman(0);
@@ -141,7 +145,7 @@ public class GUI extends JFrame {
             }
         });
 
-        //End screen multiplayer button that changes gamemode
+        //End screen multiplayer button that changes game mode
         singleplayerEndScreen.multiplayerButton.addActionListener(e -> {
             chooseWordScreen.ResetScreen();
             cl.show(panelContent, "4");
@@ -217,6 +221,8 @@ public class GUI extends JFrame {
                 fileNotFoundException.printStackTrace();
             }
         });
+
+        //next players turn
         mainScreen.nextPlayerButton.addActionListener(e -> {
             mainScreen.nextPlayerButton.setVisible(false);
             ShowKeyboard();
@@ -251,7 +257,7 @@ public class GUI extends JFrame {
         multiplayerEndScreen.quitGameButton.addActionListener(e -> System.exit(0));
     }
 
-    public void HangmanRound() throws FileNotFoundException {
+    private void HangmanRound() throws FileNotFoundException {
 
         mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 320));
         incorrectGuesses = 0;
@@ -273,7 +279,7 @@ public class GUI extends JFrame {
             mainScreen.DrawWordDisplay(playerGuesses);
     }
 
-    public void HangmanGuess() {
+    private void HangmanGuess() {
 
         //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
 
@@ -284,53 +290,10 @@ public class GUI extends JFrame {
             if (WordGeneration.Check(splitWord, playerGuess)) {//checks if player guess was correct
                 WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses);//Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
-                correctlyGuessed = Arrays.equals(splitWord, playerGuesses);  //Checks if word has been guessed
 
                 //What happens when word is correctly guessed:
-                if (correctlyGuessed) {
-                    HideKeyboard();
-
-                    //What happens in Singleplayer if correct
-                    if (gameMode == 's') {
-                        gamesWon++;
-                        mainScreen.UpdateHangman(-1);
-                        mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
-                        mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
-                        mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 270));
-                        //What happens if new highscore
-                    }
-
-                    //What happens in multiplayer when correct
-                    else if (gameMode == 'm') {
-                        if (playerTurn == 1) {
-                            System.out.println("player1 turn");
-                            chooseWordScreen.ResetEnterWord();
-                            player2Correct = true;
-                            player = "Player 2";
-                            playerTurn = 2; }
-                        else if (playerTurn == 2) {
-                            chooseWordScreen.ResetEnterWord();
-                            player1Correct = true;
-                            player = "Player 1";
-                            playerTurn = 1;}
-                        //player 1 wins
-                        if(player1Correct && !player2Correct) {
-                            winner = "Player 1";
-                            cl.show(panelContent, "5");
-                        }
-                        //Draw
-                        else if(player1Correct&&player2Correct) {
-                            winner = "Draw";
-                            cl.show(panelContent, "5");
-                       }
-                        //next round, only player 2 has guessed so far
-                        else {
-                            mainScreen.SetNextPlayerButton(player);
-                            mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
-                            mainScreen.nextPlayerButton.setVisible(true);
-                        }
-
-                    }
+                if (Arrays.equals(splitWord, playerGuesses)) {
+                    CorrectGuess();
                 }
             }
             else {
@@ -344,7 +307,8 @@ public class GUI extends JFrame {
 
     }
 
-    public void IncorrectGuess() {
+    //What happens when an incorrect guess is made
+    private void IncorrectGuess() {
 
         HideKeyboard();
         if (gameMode=='s') {
@@ -371,7 +335,53 @@ public class GUI extends JFrame {
         }
     }
 
-    public void ShowKeyboard() {
+    //What happens when a correct guess is made
+    private void CorrectGuess() {
+        //What happens in Singleplayer if correct
+        if (gameMode == 's') {
+            gamesWon++;
+            mainScreen.UpdateHangman(-1);
+            mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
+            mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
+            mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 270));
+            //What happens if new highscore
+        }
+
+        //What happens in multiplayer when correct
+        else if (gameMode == 'm') {
+            if (playerTurn == 1) {
+                System.out.println("player1 turn");
+                chooseWordScreen.ResetEnterWord();
+                player2Correct = true;
+                player = "Player 2";
+                playerTurn = 2; }
+            else if (playerTurn == 2) {
+                chooseWordScreen.ResetEnterWord();
+                player1Correct = true;
+                player = "Player 1";
+                playerTurn = 1;}
+            //player 1 wins
+            if(player1Correct && !player2Correct) {
+                winner = "Player 1";
+                cl.show(panelContent, "5");
+            }
+            //Draw
+            else if(player1Correct&&player2Correct) {
+                winner = "Draw";
+                cl.show(panelContent, "5");
+            }
+            //next round, only player 2 has guessed so far
+            else {
+                mainScreen.SetNextPlayerButton(player);
+                mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
+                mainScreen.nextPlayerButton.setVisible(true);
+            }
+
+        }
+        HideKeyboard();
+    }
+
+    private void ShowKeyboard() {
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].setVisible(true);
             mainScreen.keyboardButtons[i].setEnabled(true);
@@ -381,7 +391,7 @@ public class GUI extends JFrame {
         }
     }
 
-    public void HideKeyboard() {
+    private void HideKeyboard() {
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].setVisible(false);
         }

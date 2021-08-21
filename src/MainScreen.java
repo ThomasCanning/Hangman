@@ -28,6 +28,10 @@ public class MainScreen extends JPanel {
 
     MainScreen() {
 
+        nextPlayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        nextRoundButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        quitRoundButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+
         for(int i = 0; i < 3; i++) {
             blankButtons[i] = new JButton();
             blankButtons[i].setOpaque(false);
@@ -57,6 +61,7 @@ public class MainScreen extends JPanel {
             keyboardButtons[i].setPreferredSize(new Dimension(170, 90));
             keyboardButtons[i].setActionCommand(String.valueOf(QWERTY[i]));
             keyboardButtons[i].setFocusable(false);
+            keyboardButtons[i].setFont(new Font("Comic Sans",Font.PLAIN, 30));
             bottomPanel.add(keyboardButtons[i]);
 
         }

@@ -30,6 +30,8 @@ public class StartScreen extends JPanel{
         startSinglePlayerButton.setPreferredSize(new Dimension(300, 100));
         bottomPanel.add(startSinglePlayerButton);
         startSinglePlayerButton.setVerticalAlignment(JButton.CENTER);
+        startMultiPlayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        startSinglePlayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
 
         startMultiPlayerButton.setFocusable(false);
         startMultiPlayerButton.setPreferredSize(new Dimension(300, 100));

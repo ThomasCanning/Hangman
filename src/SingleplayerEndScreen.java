@@ -11,6 +11,10 @@ public class SingleplayerEndScreen extends JPanel {
     ImageIcon endScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
 
     public SingleplayerEndScreen() {
+        multiplayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        newGameButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        quitGameButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
+
         this.setLayout(new BorderLayout());
 
         JPanel bottomPanel = new JPanel();
