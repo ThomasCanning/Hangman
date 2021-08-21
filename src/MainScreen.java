@@ -89,10 +89,6 @@ public class MainScreen extends JPanel {
 
     }
 
-    public void SetNextPlayerButton (String player) {
-        nextPlayerButton.setText(player + "'s Turn");
-    }
-
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
@@ -116,53 +112,67 @@ public class MainScreen extends JPanel {
                     g2D.setBackground(Color.DARK_GRAY);
                 }
                 else {
-                    g2D.drawImage(hangman3.getImage(), 200, 0, null);
-                    g2D.drawImage(hangman4.getImage(), 200, 0, null);
-                    g2D.drawImage(hangman5.getImage(), 200, 0, null);
-                    g2D.drawImage(hangman6.getImage(), 200, 0, null);
-                    g2D.drawImage(hangman7.getImage(), 200, 0, null);
+                    g2D.drawImage(hangman3.getImage(), 200, -120, null);
+                    g2D.drawImage(hangman4.getImage(), 200, -120, null);
+                    g2D.drawImage(hangman5.getImage(), 200, -120, null);
+                    g2D.drawImage(hangman6.getImage(), 200, -120, null);
+                    g2D.drawImage(hangman7.getImage(), 200, -120, null);
                 }
                 g2D.setColor(new Color(0, 100, 0));
             }
-            case 0 -> g2D.drawImage(hangman1.getImage(), 200, -100, null);
+
+            case -2 -> {
+                if (GUI.gameMode == 'm') {
+                    g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                    g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
+                    FontMetrics metrics = getFontMetrics(g.getFont());
+                    switch (GUI.player) {
+                        case "Player 1" -> g2D.drawString("Player 2 is guessing", ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Player 2 is guessing")) / 2), 530);
+                        case "Player 2" -> g2D.drawString("Player 1 is guessing", ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Player 1 is guessing")) / 2), 530);
+                    }
+
+                }
+            }
+            case 0 -> g2D.drawImage(hangman1.getImage(), 200, -120, null);
+
             case 1 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
             }
             case 2 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
+                g2D.drawImage(hangman3.getImage(), 200, -120, null);
             }
             case 3 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                g2D.drawImage(hangman4.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
+                g2D.drawImage(hangman3.getImage(), 200, -120, null);
+                g2D.drawImage(hangman4.getImage(), 200, -120, null);
             }
             case 4 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                g2D.drawImage(hangman4.getImage(), 200, -100, null);
-                g2D.drawImage(hangman5.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
+                g2D.drawImage(hangman3.getImage(), 200, -120, null);
+                g2D.drawImage(hangman4.getImage(), 200, -120, null);
+                g2D.drawImage(hangman5.getImage(), 200, -120, null);
             }
             case 5 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                g2D.drawImage(hangman4.getImage(), 200, -100, null);
-                g2D.drawImage(hangman5.getImage(), 200, -100, null);
-                g2D.drawImage(hangman6.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
+                g2D.drawImage(hangman3.getImage(), 200, -120, null);
+                g2D.drawImage(hangman4.getImage(), 200, -120, null);
+                g2D.drawImage(hangman5.getImage(), 200, -120, null);
+                g2D.drawImage(hangman6.getImage(), 200, -120, null);
             }
             default -> {
-                g2D.drawImage(hangman1.getImage(), 200, -100, null);
-                g2D.drawImage(hangman2.getImage(), 200, -100, null);
-                g2D.drawImage(hangman3.getImage(), 200, -100, null);
-                g2D.drawImage(hangman4.getImage(), 200, -100, null);
-                g2D.drawImage(hangman5.getImage(), 200, -100, null);
-                g2D.drawImage(hangman6.getImage(), 200, -100, null);
-                g2D.drawImage(hangman7.getImage(), 200, -100, null);
+                g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                g2D.drawImage(hangman2.getImage(), 200, -120, null);
+                g2D.drawImage(hangman3.getImage(), 200, -120, null);
+                g2D.drawImage(hangman4.getImage(), 200, -120, null);
+                g2D.drawImage(hangman5.getImage(), 200, -120, null);
+                g2D.drawImage(hangman6.getImage(), 200, -120, null);
+                g2D.drawImage(hangman7.getImage(), 200, -120, null);
             }
         }
         if (playerGuesses != null) {

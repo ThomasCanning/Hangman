@@ -87,6 +87,8 @@ public class GUI extends JFrame {
         //Defines what happens when keyboard is pressed
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].addActionListener(e -> {
+                System.out.println("test");
+                mainScreen.UpdateHangman(0);
                 String keyboardInput = e.getActionCommand();
 
                 //This character is player input
@@ -190,6 +192,7 @@ public class GUI extends JFrame {
         //Submit button
         chooseWordScreen.submit.addActionListener(e -> {
             word = String.valueOf(chooseWordScreen.enterWord.getPassword());
+            mainScreen.UpdateHangman(-2);
             try {
                 if (word.isEmpty() || !WordGeneration.CheckValidWord(word)) {
                     //ensures valid word is entered so makes user enter another word
@@ -320,7 +323,7 @@ public class GUI extends JFrame {
                 player = "Player 2";
                 playerTurn = 2;
                 //next round
-                mainScreen.SetNextPlayerButton(player);
+                mainScreen.nextPlayerButton.setText("Next Turn");
                 mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
                 mainScreen.nextPlayerButton.setVisible(true);
             }
@@ -372,7 +375,7 @@ public class GUI extends JFrame {
             }
             //next round, only player 2 has guessed so far
             else {
-                mainScreen.SetNextPlayerButton(player);
+                mainScreen.nextPlayerButton.setText("Next Turn");
                 mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
                 mainScreen.nextPlayerButton.setVisible(true);
             }
