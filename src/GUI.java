@@ -293,6 +293,7 @@ public class GUI extends JFrame {
             if (WordGeneration.Check(splitWord, playerGuess)) {//checks if player guess was correct
                 WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses);//Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
+                mainScreen.UpdateHangman(incorrectGuesses);
 
                 //What happens when word is correctly guessed:
                 if (Arrays.equals(splitWord, playerGuesses)) {
