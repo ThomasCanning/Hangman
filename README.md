@@ -13,4 +13,6 @@ file of 370,000 words.
 
 To run the game, download the zip file from github and extract the file, then run the jar file
 
+At the moment, the game runs in 1920*1080 resolution.
+
 Enjoy
