@@ -98,7 +98,11 @@ public class MainScreen extends JPanel {
                     FontMetrics metrics = getFontMetrics(g.getFont());
                     g2D.drawString("Current Score: " + GUI.GetGamesWon(), ((GUI.SCREEN_WIDTH / 2) - (metrics.stringWidth("Current Score: " + GUI.GetGamesWon())) / 2), 350);
                     try {
-                        if (GUI.gamesWon > GUI.ReadHighscoreFile()) g2D.setColor(new Color(0, 100, 0));
+                        if (GUI.gamesWon > GUI.ReadHighscoreFile()){
+                            g2D.setColor(new Color(0, 100, 0));
+                            GUI.highScore=GUI.gamesWon;
+                            GUI.WriteToHighscoreFile(GUI.highScore);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

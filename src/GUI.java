@@ -16,13 +16,13 @@ public class GUI extends JFrame {
     public static final int INCORRECT_GUESSES_LIMIT = 6;
     public static final int MAX_WORD_LENGTH = 30;
 
-    public static int gamesWon = 0;
-    private static int highScore;
+    public static int gamesWon = 0;//
+    public static int highScore;
     private char playerGuess;
     private static boolean correctlyGuessed;
     private static char[] splitWord;
     private static char[] playerGuesses;
-    public static int incorrectGuesses = 0;
+    public static int incorrectGuesses = 0;//
     private static String word;
 
     public static char gameMode;
@@ -33,16 +33,14 @@ public class GUI extends JFrame {
     public static Boolean player1Correct = false;
     public static Boolean player2Correct = false;
 
+    //creates GUI elements
     StartScreen startScreen = new StartScreen();
     MainScreen mainScreen = new MainScreen();
     SingleplayerEndScreen singleplayerEndScreen = new SingleplayerEndScreen();
     ChoseWordScreen chooseWordScreen = new ChoseWordScreen();
     MultiplayerEndScreen multiplayerEndScreen = new MultiplayerEndScreen();
-
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
     CardLayout cl = new CardLayout();   //creates a card layout
-
-    //creates GUI elements
     ImageIcon taskbarImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("TaskBarImage.png")));
 
     public GUI() throws IOException {
@@ -93,37 +91,10 @@ public class GUI extends JFrame {
                 for (int i1 = 0; i1 < mainScreen.keyboardButtons.length; i1++) {
                     if (mainScreen.keyboardButtons[i1] == e.getSource()) {
                         mainScreen.keyboardButtons[i1].setEnabled(false);
-                        try {
-                            HangmanGuess();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
+                        HangmanGuess();
                         //What happens when fail
                         if (incorrectGuesses == INCORRECT_GUESSES_LIMIT) {
-
-                            HideKeyboard();
-                                if (gameMode=='s') {
-                                    mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
-                                }
-                                else if (gameMode=='m') {
-                                    if (playerTurn == 1) {
-                                        System.out.println("1");
-                                        player = "Player 2";
-                                        playerTurn = 2;
-                                        //next round
-                                        mainScreen.SetNextPlayerButton(player);
-                                        mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
-                                        mainScreen.nextPlayerButton.setVisible(true);
-                                    }
-                                    else if (playerTurn == 2) {
-                                        if(player2Correct && !player1Correct) {
-                                            winner = "Player 2";
-                                            cl.show(panelContent, "5");
-                                        }
-                                        player = "Player 1";
-                                        playerTurn = 1;
-                                    }
-                                }
+                            IncorrectGuess();
                         }
                     }
                 }
@@ -142,25 +113,17 @@ public class GUI extends JFrame {
         mainScreen.nextRoundButton.addActionListener(e -> {
             mainScreen.bottomPanel.remove(mainScreen.nextRoundButton);
             mainScreen.bottomPanel.remove(mainScreen.quitRoundButton);
-            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-                mainScreen.keyboardButtons[i].setVisible(true);
-            }
-            for (int i = 0; i < mainScreen.blankButtons.length; i++) {
-                mainScreen.blankButtons[i].setVisible(true);
-            }
+            ShowKeyboard();
+            cl.show(panelContent, "2");
+            mainScreen.UpdateHangman(0);
 
             try {
-                cl.show(panelContent, "2");
-                //Resets keyboard
-                for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-                    mainScreen.keyboardButtons[i].setEnabled(true);
-                }
-                mainScreen.UpdateHangman(0);
                 HangmanRound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
         });
+
         //end screen quit game button
         singleplayerEndScreen.quitGameButton.addActionListener(e -> System.exit(0));
 
@@ -256,16 +219,7 @@ public class GUI extends JFrame {
         });
         mainScreen.nextPlayerButton.addActionListener(e -> {
             mainScreen.nextPlayerButton.setVisible(false);
-            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-                mainScreen.keyboardButtons[i].setVisible(true);
-            }
-            for (int i = 0; i < mainScreen.blankButtons.length; i++) {
-                mainScreen.blankButtons[i].setVisible(true);
-            }
-            //Resets keyboard
-            for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
-                mainScreen.keyboardButtons[i].setEnabled(true);
-            }
+            ShowKeyboard();
             mainScreen.UpdateHangman(0);
             chooseWordScreen.enterWord.setText("Enter Word: ");
             cl.show(panelContent, "4");
@@ -319,7 +273,7 @@ public class GUI extends JFrame {
             mainScreen.DrawWordDisplay(playerGuesses);
     }
 
-    public void HangmanGuess() throws IOException {
+    public void HangmanGuess() {
 
         //--------------------------------------System that lets user guess and deals with incorrect/correct guesses-----------------------------------
 
@@ -334,20 +288,16 @@ public class GUI extends JFrame {
 
                 //What happens when word is correctly guessed:
                 if (correctlyGuessed) {
-                    mainScreen.UpdateHangman(-1);
                     HideKeyboard();
 
                     //What happens in Singleplayer if correct
                     if (gameMode == 's') {
                         gamesWon++;
+                        mainScreen.UpdateHangman(-1);
                         mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
                         mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
                         mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 270));
                         //What happens if new highscore
-                        if (gamesWon > ReadHighscoreFile()) {
-                            highScore = gamesWon;
-                            WriteToHighscoreFile(highScore);
-                        }
                     }
 
                     //What happens in multiplayer when correct
@@ -394,10 +344,37 @@ public class GUI extends JFrame {
 
     }
 
+    public void IncorrectGuess() {
+
+        HideKeyboard();
+        if (gameMode=='s') {
+            mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
+        }
+        else if (gameMode=='m') {
+            if (playerTurn == 1) {
+                System.out.println("1");
+                player = "Player 2";
+                playerTurn = 2;
+                //next round
+                mainScreen.SetNextPlayerButton(player);
+                mainScreen.bottomPanel.add(mainScreen.nextPlayerButton);
+                mainScreen.nextPlayerButton.setVisible(true);
+            }
+            else if (playerTurn == 2) {
+                if(player2Correct && !player1Correct) {
+                    winner = "Player 2";
+                    cl.show(panelContent, "5");
+                }
+                player = "Player 1";
+                playerTurn = 1;
+            }
+        }
+    }
+
     public void ShowKeyboard() {
-        for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
-            mainScreen.keyboardButtons[i2].setVisible(true);
-            mainScreen.keyboardButtons[i2].setEnabled(true);
+        for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+            mainScreen.keyboardButtons[i].setVisible(true);
+            mainScreen.keyboardButtons[i].setEnabled(true);
         }
         for (int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
             mainScreen.blankButtons[i2].setVisible(true);
@@ -405,11 +382,11 @@ public class GUI extends JFrame {
     }
 
     public void HideKeyboard() {
-        for (int i2 = 0; i2 < mainScreen.keyboardButtons.length; i2++) {
-            mainScreen.keyboardButtons[i2].setVisible(false);
+        for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
+            mainScreen.keyboardButtons[i].setVisible(false);
         }
-        for (int i2 = 0; i2 < mainScreen.blankButtons.length; i2++) {
-            mainScreen.blankButtons[i2].setVisible(false);
+        for (int i = 0; i < mainScreen.blankButtons.length; i++) {
+            mainScreen.blankButtons[i].setVisible(false);
         }
     }
 
@@ -421,7 +398,7 @@ public class GUI extends JFrame {
         return String.valueOf(highScore);
     }
 
-    private static void WriteToHighscoreFile(int highScore) {
+    public static void WriteToHighscoreFile(int highScore) {
         try {
             FileWriter highscoreWriter = new FileWriter("res/highscores.txt");
             highscoreWriter.write(highScore + "");
