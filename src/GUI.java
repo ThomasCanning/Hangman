@@ -87,7 +87,6 @@ public class GUI extends JFrame {
         //Defines what happens when keyboard is pressed
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].addActionListener(e -> {
-                System.out.println("test");
                 mainScreen.UpdateHangman(0);
                 String keyboardInput = e.getActionCommand();
 
@@ -293,6 +292,7 @@ public class GUI extends JFrame {
             if (WordGeneration.Check(splitWord, playerGuess)) {//checks if player guess was correct
                 WordGeneration.CorrectGuess(playerGuess, splitWord, playerGuesses);//Updates playerGuesses array with new guess
                 mainScreen.DrawWordDisplay(playerGuesses);
+                mainScreen.DrawWordDisplay(playerGuesses);
                 mainScreen.UpdateHangman(incorrectGuesses);
 
                 //What happens when word is correctly guessed:
@@ -320,7 +320,6 @@ public class GUI extends JFrame {
         }
         else if (gameMode=='m') {
             if (playerTurn == 1) {
-                System.out.println("1");
                 player = "Player 2";
                 playerTurn = 2;
                 //next round
@@ -354,7 +353,6 @@ public class GUI extends JFrame {
         //What happens in multiplayer when correct
         else if (gameMode == 'm') {
             if (playerTurn == 1) {
-                System.out.println("player1 turn");
                 chooseWordScreen.ResetEnterWord();
                 player2Correct = true;
                 player = "Player 2";
