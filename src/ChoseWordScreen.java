@@ -32,6 +32,18 @@ public class ChoseWordScreen extends JPanel {
         this.add(submit);
     }
 
+    public void ResetScreen () {
+        this.enterWord.setEchoChar((char)0);
+        this.enterWord.setText("Enter Word:");
+        GUI.gameMode = 'm';
+        GUI.playerTurn = 1;
+        GUI.player = "Player 1";
+        GUI.winner = null;
+        GUI.player1Correct = false;
+        GUI.player2Correct = false;
+        GUI.incorrectGuesses = 0;
+    }
+
 
     protected void paintComponent(Graphics gp) {
         super.paintComponent(gp);
