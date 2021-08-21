@@ -9,26 +9,27 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements ActionListener {
 
-    public static final int SCREEN_WIDTH = 1920;
-    public static final int SCREEN_HEIGHT = 1080;
     public static final int INCORRECT_GUESSES_LIMIT = 6;
     public static final int MAX_WORD_LENGTH = 30;
 
-    public static int gamesWon = 0;//
-    public static int highScore;
     private char playerGuess;
     private static boolean correctlyGuessed;
     private static char[] splitWord;
     private static char[] playerGuesses;
-    public static int incorrectGuesses = 0;//
     private static String word;
 
+    public static int incorrectGuesses = 0;
+    public static int gamesWon = 0;//
+    public static int highScore;
     public static char gameMode;
     public static int playerTurn;
     public static String player;
     public static String winner;
+
+    public static int screenWidth = 1920;
+    public static int screenHeight = 1080;
 
     public static Boolean player1Correct = false;
     public static Boolean player2Correct = false;
@@ -42,8 +43,39 @@ public class GUI extends JFrame {
     JPanel panelContent = new JPanel();  //Creates a panel to hold sub panels
     CardLayout cl = new CardLayout();   //creates a card layout
     ImageIcon taskbarImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("TaskBarImage.png")));
+    JMenuBar menuBar;
+    JMenu resolution;
+    JMenuItem res480p;
+    JMenuItem res720p;
+    JMenuItem res1080p;
+    JMenuItem res1440p;
+    JMenuItem res1080pwide;
 
-    public GUI() throws IOException {
+    public GUI(int newScreenWidth, int newScreenHeight) throws IOException {
+
+        screenWidth = newScreenWidth;
+        screenHeight = newScreenHeight;
+
+        //Menu bar
+        menuBar = new JMenuBar();
+        resolution = new JMenu("Resolution");
+        menuBar.add(resolution);
+        res480p = new JMenuItem("480p");
+        res480p.addActionListener(this);
+        res720p = new JMenuItem("720p");
+        res720p.addActionListener(this);
+        res1080p = new JMenuItem("1080p");
+        res1080p.addActionListener(this);
+        res1440p = new JMenuItem("1440p");
+        res1440p.addActionListener(this);
+        res1080pwide = new JMenuItem("1080p 21:9");
+        res1080pwide.addActionListener(this);
+        resolution.add(res480p);
+        resolution.add(res720p);
+        resolution.add(res1080p);
+        resolution.add(res1440p);
+        resolution.add(res1080pwide);
+        this.setJMenuBar(menuBar);
 
         highScore = ReadHighscoreFile();
 
@@ -57,11 +89,12 @@ public class GUI extends JFrame {
         cl.show(panelContent, "1");
 
         //Sets up the details of the main frame
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setTitle("Hangman");
         this.setIconImage(taskbarImage.getImage());//Sets this image to Image
         this.getContentPane().setBackground(new Color(237, 244, 237)); //Changes background color
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.add(panelContent, BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Sets what happens when X is pressed (closes application)
         this.setResizable(false);
@@ -230,6 +263,7 @@ public class GUI extends JFrame {
             ShowKeyboard();
             mainScreen.UpdateHangman(0);
             chooseWordScreen.enterWord.setText("Enter Word: ");
+            chooseWordScreen.enterWord.setEchoChar((char)0);
             cl.show(panelContent, "4");
             });
 
@@ -261,7 +295,7 @@ public class GUI extends JFrame {
 
     private void HangmanRound() throws FileNotFoundException {
 
-        mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 320));
+        mainScreen.bottomPanel.setPreferredSize(new Dimension((int) (screenWidth/1.92), (int) (screenHeight/3.38)));
         incorrectGuesses = 0;
         correctlyGuessed = false;
         if (gameMode == 's') {word = WordGeneration.Generate();}  //Generates a random word from text file (TEXT FILE IS A PLACEHOLDER)
@@ -346,7 +380,7 @@ public class GUI extends JFrame {
             mainScreen.UpdateHangman(-1);
             mainScreen.bottomPanel.add(mainScreen.nextRoundButton);
             mainScreen.bottomPanel.add(mainScreen.quitRoundButton);
-            mainScreen.bottomPanel.setPreferredSize(new Dimension(1000, 270));
+            mainScreen.bottomPanel.setPreferredSize(new Dimension((int) (screenWidth/1.92), (int) (screenHeight/7.20)));
             //What happens if new highscore
         }
 
@@ -383,6 +417,69 @@ public class GUI extends JFrame {
         HideKeyboard();
     }
 
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == res480p) {
+            try {
+                screenWidth = 854;
+                screenHeight = 480;
+                ResizeAll();
+                this.setVisible(false);
+                dispose();
+                new GUI(854, 480);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else if(e.getSource() == res720p) {
+            try {
+                screenWidth = 1280;
+                screenHeight = 720;
+                ResizeAll();
+                this.setVisible(false);
+                dispose();
+                new GUI(1280, 720);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else if(e.getSource() == res1080p) {
+            try {
+                screenWidth = 1920;
+                screenHeight = 1080;
+                ResizeAll();
+                this.setVisible(false);
+                dispose();
+                new GUI(1920, 1080);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else if(e.getSource() == res1440p) {
+            try {
+                screenWidth = 2560;
+                screenHeight = 1440;
+                ResizeAll();
+                this.setVisible(false);
+                dispose();
+                new GUI(2560, 1440);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+        else if(e.getSource() == res1080pwide) {
+            try {
+                screenWidth = 2560;
+                screenHeight = 1080;
+                ResizeAll();
+                this.setVisible(false);
+                dispose();
+                new GUI(2560, 1080);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
+
     private void ShowKeyboard() {
         for (int i = 0; i < mainScreen.keyboardButtons.length; i++) {
             mainScreen.keyboardButtons[i].setVisible(true);
@@ -400,6 +497,14 @@ public class GUI extends JFrame {
         for (int i = 0; i < mainScreen.blankButtons.length; i++) {
             mainScreen.blankButtons[i].setVisible(false);
         }
+    }
+    private void ResizeAll(){
+        this.setSize(screenWidth, screenHeight);
+        startScreen.UpdateSize();
+        mainScreen.UpdateSize();
+        singleplayerEndScreen.UpdateSize();
+        chooseWordScreen.UpdateSize();
+        multiplayerEndScreen.UpdateSize();
     }
 
     public static String GetGamesWon() {

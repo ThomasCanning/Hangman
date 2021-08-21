@@ -6,40 +6,45 @@ public class StartScreen extends JPanel{
 
     JButton startSinglePlayerButton = new JButton("Singleplayer");
     JButton startMultiPlayerButton = new JButton("Multiplayer");
+    JLabel label = new JLabel();
+    JPanel bottomPanel = new JPanel();
+    ImageIcon startScreenImageIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
+    Image startScreenImage = startScreenImageIcon.getImage().getScaledInstance((int) (GUI.screenWidth/1.50), (int) (GUI.screenHeight/1.90), Image.SCALE_DEFAULT);
 
     StartScreen() { //Start screen panel GUI
         this.setLayout(new BorderLayout());
 
-        ImageIcon startScreenImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("StartScreenImage.png")));
+        startScreenImageIcon = new ImageIcon(startScreenImage);
 
-        JLabel label = new JLabel();
-        label.setIcon(startScreenImage);
+        label.setIcon(startScreenImageIcon);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
         label.setText("Hangman");
-        label.setFont(new Font("Comic Sans", Font.BOLD, 200));
+        label.setFont(new Font("Comic Sans", Font.BOLD, (int) (GUI.screenWidth/9.60)));
         label.setVerticalTextPosition(JLabel.TOP);
         label.setHorizontalTextPosition(JLabel.CENTER);
-        label.setIconTextGap(40);
         label.setForeground(new Color(64,64,64));
 
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setPreferredSize(new Dimension(1000, 150));
-
         startSinglePlayerButton.setFocusable(false);
-        startSinglePlayerButton.setPreferredSize(new Dimension(300, 100));
         bottomPanel.add(startSinglePlayerButton);
         startSinglePlayerButton.setVerticalAlignment(JButton.CENTER);
-        startMultiPlayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
-        startSinglePlayerButton.setFont(new Font("Comic Sans", Font.BOLD, 30));
-
 
         startMultiPlayerButton.setFocusable(false);
-        startMultiPlayerButton.setPreferredSize(new Dimension(300, 100));
         bottomPanel.add(startMultiPlayerButton);
         startMultiPlayerButton.setVerticalAlignment(JButton.CENTER);
 
+        UpdateSize();
         this.add(bottomPanel, BorderLayout.SOUTH);
         this.add(label);
+    }
+    public void UpdateSize() {
+        label.setFont(new Font("Comic Sans", Font.BOLD, (int) (GUI.screenHeight/5.40)));
+        label.setIconTextGap((int) (GUI.screenHeight/27.0));
+        startSinglePlayerButton.setPreferredSize(new Dimension((int) (GUI.screenWidth/6.40), (int) (GUI.screenHeight/10.8)));
+        startMultiPlayerButton.setPreferredSize((new Dimension((int) (GUI.screenWidth/6.40), (int) (GUI.screenHeight/10.8))));
+        startMultiPlayerButton.setFont(new Font("Comic Sans", Font.BOLD, (int) (GUI.screenWidth/64.0)));
+        startSinglePlayerButton.setFont(new Font("Comic Sans", Font.BOLD, (int) (GUI.screenWidth/64.0)));
+        bottomPanel.setPreferredSize(new Dimension((int) (GUI.screenWidth/1.92), (int) (GUI.screenHeight/7.20)));
+        startScreenImage = startScreenImageIcon.getImage().getScaledInstance((int) (GUI.screenHeight/0.84), (int) (GUI.screenHeight/1.90), Image.SCALE_DEFAULT);
     }
 }
