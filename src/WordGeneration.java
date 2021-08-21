@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class WordGeneration {  //This class has a method that can be called which generates a Random word from the .txt file "word_library.txt"
+public class WordGeneration {  //This class has a method that can be called which generates a Random word from the .txt file "wordLibrary.txt"
 
     //Creates an int that is half the length of the word_library text file
     private static int pastWordsLength;
@@ -21,7 +21,7 @@ public class WordGeneration {  //This class has a method that can be called whic
 
     //Reads words from word_library text file
     private static List<String> ReadWordList() throws FileNotFoundException {
-        File file = new File("res/word_library.txt");  //Reading file with words in
+        File file = new File("res/wordLibrary.txt");  //Reading file with words in
         Scanner scan = new Scanner(file);
         List<String> words = new ArrayList<>();
 
