@@ -4,14 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MainScreen extends JPanel {
-    final ImageIcon hangman1 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman1.png")));
-    final ImageIcon hangman2 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman2.png")));
-    final ImageIcon hangman3 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman3.png")));
-    final ImageIcon hangman4 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman4.png")));
-    final ImageIcon hangman5 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman5.png")));
-    final ImageIcon hangman6 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman6.png")));
-    final ImageIcon hangman7 = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman7.png")));
-
+    ImageIcon[] hangmanImages = new ImageIcon[8];
     final char[] QWERTY = {'q','w','e','r', 't','y','u','i','o','p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','z','x','c','v','b','n','m'};
 
     private int incorrectGuesses = 0;
@@ -25,6 +18,13 @@ public class MainScreen extends JPanel {
     JPanel bottomPanel = new JPanel();
     JButton[] blankButtons = new JButton[3];
     JButton nextRoundButton = new JButton("Next Round");
+
+    {
+
+        for(int i=1; i <= hangmanImages.length-1;i++) {
+            hangmanImages[i] = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Hangman"+i+".png")));
+        }
+    }
 
     MainScreen() {
 
@@ -78,6 +78,7 @@ public class MainScreen extends JPanel {
 
     }
 
+
     public void SetIncorrectGuesses(int newIncorrectGuesses) {this.incorrectGuesses = newIncorrectGuesses;}
 
     public void SetWord (String newWord) {
@@ -92,8 +93,9 @@ public class MainScreen extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
-        switch (incorrectGuesses) {
-            case -1 -> {//clears hangman
+
+        //clears hangman
+        if (incorrectGuesses == -1) {
                 if (GUI.gameMode=='s') {
                     g2D.setFont(new Font("Comic Sans", Font.BOLD, 150));
                     FontMetrics metrics = getFontMetrics(g.getFont());
@@ -112,18 +114,17 @@ public class MainScreen extends JPanel {
                     g2D.setBackground(Color.DARK_GRAY);
                 }
                 else {
-                    g2D.drawImage(hangman3.getImage(), 200, -120, null);
-                    g2D.drawImage(hangman4.getImage(), 200, -120, null);
-                    g2D.drawImage(hangman5.getImage(), 200, -120, null);
-                    g2D.drawImage(hangman6.getImage(), 200, -120, null);
-                    g2D.drawImage(hangman7.getImage(), 200, -120, null);
+                    for(int i=3;i<=hangmanImages.length;i++)
+                    g2D.drawImage(hangmanImages[i].getImage(), 200, -120, null);
+
                 }
                 g2D.setColor(new Color(0, 100, 0));
             }
 
-            case -2 -> {
+        //used in multiplayer to display which player is guessing
+            else if (incorrectGuesses == -2) {
                 if (GUI.gameMode == 'm') {
-                    g2D.drawImage(hangman1.getImage(), 200, -120, null);
+                    g2D.drawImage(hangmanImages[1].getImage(), 200, -120, null);
                     g2D.setFont(new Font("Comic Sans", Font.BOLD, 80));
                     FontMetrics metrics = getFontMetrics(g.getFont());
                     switch (GUI.player) {
@@ -133,48 +134,19 @@ public class MainScreen extends JPanel {
 
                 }
             }
-            case 0 -> g2D.drawImage(hangman1.getImage(), 200, -120, null);
+            //case 0 -> g2D.drawImage(hangman1.getImage(), 200, -120, null);
 
-            case 1 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-            }
-            case 2 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-                g2D.drawImage(hangman3.getImage(), 200, -120, null);
-            }
-            case 3 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-                g2D.drawImage(hangman3.getImage(), 200, -120, null);
-                g2D.drawImage(hangman4.getImage(), 200, -120, null);
-            }
-            case 4 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-                g2D.drawImage(hangman3.getImage(), 200, -120, null);
-                g2D.drawImage(hangman4.getImage(), 200, -120, null);
-                g2D.drawImage(hangman5.getImage(), 200, -120, null);
-            }
-            case 5 -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-                g2D.drawImage(hangman3.getImage(), 200, -120, null);
-                g2D.drawImage(hangman4.getImage(), 200, -120, null);
-                g2D.drawImage(hangman5.getImage(), 200, -120, null);
-                g2D.drawImage(hangman6.getImage(), 200, -120, null);
-            }
-            default -> {
-                g2D.drawImage(hangman1.getImage(), 200, -120, null);
-                g2D.drawImage(hangman2.getImage(), 200, -120, null);
-                g2D.drawImage(hangman3.getImage(), 200, -120, null);
-                g2D.drawImage(hangman4.getImage(), 200, -120, null);
-                g2D.drawImage(hangman5.getImage(), 200, -120, null);
-                g2D.drawImage(hangman6.getImage(), 200, -120, null);
-                g2D.drawImage(hangman7.getImage(), 200, -120, null);
+            else if (0 <= incorrectGuesses && incorrectGuesses<=5) {
+            for (int i = 1; i <= incorrectGuesses + 1; i++) {
+                g2D.drawImage(hangmanImages[i].getImage(), 200, -120, null);
             }
         }
+
+            else {
+            for (int i = 1; i <= 7; i++) {
+                g2D.drawImage(hangmanImages[i].getImage(), 200, -120, null);
+            }
+            }
         if (playerGuesses != null) {
 
             g2D.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 100));
@@ -215,7 +187,6 @@ public class MainScreen extends JPanel {
         }
     }
 
-
     public void UpdateHangman(int incorrectGuesses) {
         SetIncorrectGuesses(incorrectGuesses);
         repaint();
@@ -225,6 +196,4 @@ public class MainScreen extends JPanel {
         SetPlayerGuesses(displayWord);
         repaint();
     }
-
-
 }
