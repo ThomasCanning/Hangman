@@ -1,4 +1,4 @@
-# Hangman - countries of the world edition
+# Hangman - Countries of the world edition
 
 The game, built in Java, features a GUI with graphics, random country selection from a text file of words, a high score system
 and multiplayer and single player game modes.
